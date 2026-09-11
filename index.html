@@ -3,636 +3,184 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#15132c">
-  <meta name="description" content="Step into Alchemist Lab — a tiny world of curious experiments, bottled wonders, and beautiful surprises.">
-  <title>Alchemist Lab — Something Wonderful Is Taking Shape</title>
+  <meta name="theme-color" content="#090a16">
+  <meta name="description" content="Enter Alchemist Lab, a living pixel laboratory where strange experiments are taking shape.">
+  <title>Alchemist Lab — The Experiment Begins</title>
   <style>
     :root {
-      --void: #0c0b1b;
-      --ink: #17142e;
-      --night: #282550;
-      --plum: #4d3d68;
-      --cream: #fff3cf;
-      --gold: #ffd66b;
-      --gold-deep: #9b5438;
-      --mint: #9dffb4;
-      --aqua: #67f1df;
-      --rose: #ff779f;
-      --line: #211b38;
-      --px: 4px;
+      --void:#090a16; --ink:#17152a; --panel:#211b38; --cream:#fff4d2;
+      --gold:#ffd56a; --amber:#e88748; --mint:#88ffca; --aqua:#57eadf;
+      --violet:#9b7cff; --rose:#ff6f91; --line:#151326;
     }
+    *{box-sizing:border-box}
+    html{color-scheme:dark}
+    html,body{min-height:100%}
+    body{margin:0;overflow-x:hidden;color:var(--cream);background:var(--void);font-family:ui-monospace,"Cascadia Mono","Courier New",monospace}
+    button,input{font:inherit} button{-webkit-tap-highlight-color:transparent}
 
-    * { box-sizing: border-box; }
-    html { color-scheme: dark; }
-    html, body { min-height: 100%; }
-    body {
-      margin: 0;
-      overflow-x: hidden;
-      color: var(--cream);
-      background: var(--void);
-      font-family: ui-monospace, "Cascadia Mono", "Courier New", monospace;
-    }
-    button, input { font: inherit; }
-    button { -webkit-tap-highlight-color: transparent; }
+    .world{position:relative;isolation:isolate;display:grid;place-items:center;min-height:100svh;overflow:hidden;padding:40px 22px 76px;background:linear-gradient(#070915 0 9%,#17152b 45%,#2a2038 100%)}
+    .world::before{content:"";position:absolute;inset:0;z-index:40;pointer-events:none;opacity:.1;background:repeating-linear-gradient(0deg,transparent 0 3px,#000 4px);mix-blend-mode:multiply}
+    .world::after{content:"";position:absolute;inset:0;z-index:39;pointer-events:none;box-shadow:inset 0 0 190px 42px rgba(2,2,10,.88)}
 
-    .world {
-      position: relative;
-      isolation: isolate;
-      display: grid;
-      place-items: center;
-      min-height: 100svh;
-      overflow: hidden;
-      padding: 48px 24px 84px;
-      background:
-        radial-gradient(circle at 51% 35%, rgba(111, 91, 166, .26) 0 18%, transparent 42%),
-        linear-gradient(#11132f 0%, #302c5a 46%, #796684 72%, #bf886d 100%);
-    }
+    /* The room is deliberately CSS-only: faster than loading a decorative scene image. */
+    .lab{position:absolute;inset:0;z-index:1;overflow:hidden;pointer-events:none}
+    .wall{position:absolute;inset:0 0 18%;background:
+      linear-gradient(90deg,transparent 49.5%,rgba(7,7,17,.35) 50% 51%,transparent 51.5%) 0 0/96px 48px,
+      linear-gradient(rgba(255,255,255,.035) 48%,rgba(7,7,17,.4) 49% 53%,transparent 54%) 0 0/96px 48px,
+      radial-gradient(circle at 50% 46%,rgba(105,75,161,.24),transparent 45%),
+      linear-gradient(110deg,#19172c,#262039 48%,#171526)}
+    .beam{position:absolute;background:linear-gradient(90deg,#251c31,#4e3544 45%,#281d31);border:6px solid #100f1d;box-shadow:inset 0 5px rgba(255,255,255,.07),7px 8px rgba(4,4,12,.45)}
+    .beam.top{top:6%;left:-1%;width:102%;height:28px}.beam.left{top:0;bottom:15%;left:7%;width:27px}.beam.right{top:0;bottom:15%;right:7%;width:27px}
+    .window{position:absolute;top:12%;left:50%;width:min(48vw,640px);height:43%;translate:-50% 0;border:12px solid #171326;background:
+      radial-gradient(circle at 70% 24%,#fff4a5 0 3%,#efb561 4% 7%,transparent 8%),
+      radial-gradient(circle,#dffcff 0 1px,transparent 2px) 9px 8px/52px 47px,
+      linear-gradient(#101733,#292853 57%,#61425d);box-shadow:inset 0 0 0 7px #4b3e64,0 12px 0 #0c0b18,0 0 65px rgba(112,87,180,.25);clip-path:polygon(7% 0,93% 0,100% 13%,100% 100%,0 100%,0 13%)}
+    .window::before,.window::after{content:"";position:absolute;background:#171326}.window::before{left:49%;top:0;width:12px;height:100%}.window::after{left:0;top:48%;width:100%;height:12px}
+    .aurora{position:absolute;top:17%;left:50%;width:min(42vw,570px);height:25%;translate:-50% 0;opacity:.55;background:linear-gradient(155deg,transparent 26%,rgba(83,234,222,.65) 28% 34%,rgba(160,108,255,.36) 37% 43%,transparent 45%);filter:blur(7px);animation:aurora 6s ease-in-out infinite alternate}
+    @keyframes aurora{to{translate:-48% 9px;filter:blur(11px);opacity:.8}}
 
-    .world::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      z-index: 30;
-      pointer-events: none;
-      opacity: .15;
-      background: repeating-linear-gradient(0deg, transparent 0 3px, #080715 4px);
-      mix-blend-mode: multiply;
-    }
-    .world::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      z-index: 29;
-      pointer-events: none;
-      box-shadow: inset 0 0 180px 36px rgba(7, 6, 24, .74);
-    }
+    .shelf{position:absolute;width:29vw;max-width:410px;height:14px;border:5px solid #100e1c;background:linear-gradient(#b66a47,#65394b);box-shadow:0 8px #171322,0 14px 20px rgba(0,0,0,.4)}
+    .shelf.left{left:8.5%;top:32%}.shelf.right{right:8.5%;top:29%}
+    .vial{--c:var(--aqua);position:absolute;bottom:9px;width:24px;height:47px;border:4px solid #121124;background:linear-gradient(90deg,rgba(255,255,255,.5) 0 15%,transparent 16%),linear-gradient(transparent 38%,var(--c) 39%);box-shadow:inset 0 -5px color-mix(in srgb,var(--c) 65%,#111),0 0 13px color-mix(in srgb,var(--c) 45%,transparent);clip-path:polygon(25% 0,75% 0,75% 22%,100% 40%,100% 100%,0 100%,0 40%,25% 22%)}
+    .v1{left:9%;--c:var(--rose)}.v2{left:28%;height:61px;--c:var(--mint)}.v3{left:52%;width:31px;--c:var(--violet)}.v4{left:77%;height:53px;--c:var(--gold)}
+    .shelf.right .v1{--c:var(--aqua)}.shelf.right .v2{--c:var(--gold)}.shelf.right .v3{--c:var(--rose)}.shelf.right .v4{--c:var(--mint)}
+    .vial::after{content:"";position:absolute;left:7px;bottom:6px;width:5px;height:5px;background:#fff;opacity:.65;animation:bubble 2.4s steps(5) infinite}
+    @keyframes bubble{to{translate:3px -24px;opacity:0}}
 
-    .stars, .stars::before, .stars::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background-image:
-        radial-gradient(circle, #fff1b8 0 1px, transparent 1.5px),
-        radial-gradient(circle, #bffbf5 0 1px, transparent 1.5px);
-      background-position: 9vw 11vh, 43vw 16vh;
-      background-size: 27vw 21vh, 39vw 29vh;
-      opacity: .78;
-    }
-    .stars::before { transform: translate(13vw, 7vh); opacity: .46; }
-    .stars::after { transform: translate(-6vw, 16vh); opacity: .27; }
+    .pipe{position:absolute;border:13px solid #76516a;border-left:0;border-bottom:0;filter:drop-shadow(6px 7px #0e0c19)}
+    .pipe.p1{left:10%;top:9%;width:18%;height:14%;border-radius:0 22px 0 0}.pipe.p2{right:11%;top:8%;width:16%;height:16%;scale:-1 1;border-radius:0 22px 0 0}
+    .pipe::after{content:"";position:absolute;width:34px;height:24px;background:#c17a58;border:5px solid #171322;top:-19px;right:25%;box-shadow:inset 5px 0 rgba(255,255,255,.12)}
 
-    .moon {
-      position: absolute;
-      top: 7vh;
-      right: 9vw;
-      width: clamp(68px, 8vw, 116px);
-      aspect-ratio: 1;
-      border: 6px solid #6e4f67;
-      background:
-        linear-gradient(135deg, rgba(255,255,255,.9) 0 14%, transparent 15%),
-        radial-gradient(circle at 32% 31%, #d5a85d 0 7%, transparent 8%),
-        radial-gradient(circle at 68% 65%, #dcaf63 0 10%, transparent 11%),
-        linear-gradient(135deg, #fff9c9, #f5c96e 62%, #c47750);
-      box-shadow:
-        0 0 0 5px #251e3e,
-        8px 8px 0 #151228,
-        0 0 52px 16px rgba(255, 219, 128, .24);
-      clip-path: polygon(12% 0,88% 0,88% 6%,100% 6%,100% 88%,88% 88%,88% 100%,12% 100%,12% 94%,0 94%,0 12%,12% 12%);
-    }
+    .floor{position:absolute;inset:auto -10% 0;height:23%;transform:perspective(340px) rotateX(48deg);transform-origin:bottom;background:
+      linear-gradient(90deg,rgba(10,9,20,.8) 4px,transparent 4px) 0 0/80px 100%,
+      linear-gradient(rgba(10,9,20,.8) 4px,transparent 4px) 0 0/100% 55px,
+      linear-gradient(90deg,#3a2941,#50364b);border-top:8px solid #120f20;box-shadow:inset 0 14px #684653}
+    .floor-glow{position:absolute;left:50%;bottom:-2%;width:54vw;height:17%;translate:-50% 0;background:radial-gradient(ellipse,rgba(82,239,216,.19),transparent 67%);filter:blur(6px)}
 
-    .cloud {
-      position: absolute;
-      z-index: 2;
-      width: clamp(230px, 30vw, 480px);
-      height: 78px;
-      color: rgba(211, 204, 236, .56);
-      background: currentColor;
-      box-shadow: 44px -29px 0 -8px currentColor, 96px -48px 0 -17px currentColor, 148px -22px 0 -2px currentColor, 205px -38px 0 -13px currentColor;
-      clip-path: polygon(0 47%,8% 47%,8% 28%,18% 28%,18% 14%,30% 14%,30% 26%,47% 26%,47% 8%,62% 8%,62% 29%,79% 29%,79% 42%,100% 42%,100% 74%,88% 74%,88% 86%,18% 86%,18% 74%,0 74%);
-      filter: drop-shadow(0 9px 0 rgba(35, 29, 67, .25));
-      animation: drift 44s linear infinite;
-    }
-    .cloud-a { top: 20vh; left: -38vw; }
-    .cloud-b { top: 47vh; left: -46vw; opacity: .45; scale: .72; animation-duration: 57s; animation-delay: -22s; }
-    @keyframes drift { to { translate: 155vw 0; } }
+    .reactor{position:absolute;right:8.5%;bottom:8%;width:clamp(120px,15vw,210px);height:clamp(180px,25vw,310px);border:8px solid #12101f;background:linear-gradient(90deg,#34253e,#6d4861 46%,#2c2037);box-shadow:inset 9px 0 rgba(255,255,255,.07),11px 13px rgba(3,3,11,.5);clip-path:polygon(13% 0,87% 0,100% 10%,100% 90%,88% 100%,12% 100%,0 90%,0 10%)}
+    .reactor::before{content:"";position:absolute;inset:17% 17%;border:7px solid #141225;border-radius:50%;background:radial-gradient(circle,#eaffd7 0 7%,#7dffd4 8% 25%,#32a99f 26% 51%,#193c52 52%);box-shadow:0 0 34px #57eadf,inset 0 0 18px #fff;animation:pulse 2.2s steps(5) infinite}
+    .reactor::after{content:"ARC-07";position:absolute;left:19%;right:19%;bottom:8%;padding:5px;color:#191527;background:#f4cf72;border:4px solid #151225;text-align:center;font-size:10px;font-weight:900;letter-spacing:.12em}
+    @keyframes pulse{50%{filter:brightness(1.35);scale:1.04}}
 
-    .mountains {
-      position: absolute;
-      z-index: 1;
-      inset: auto 0 13vh;
-      height: 43vh;
-      background: linear-gradient(135deg, #625674 0 12%, #3e385f 13% 62%, #282747 63%);
-      clip-path: polygon(0 69%,9% 47%,16% 63%,25% 27%,35% 61%,47% 40%,57% 68%,69% 24%,78% 58%,88% 38%,100% 68%,100% 100%,0 100%);
-      filter: drop-shadow(0 -6px 0 #928099);
-    }
-    .mountains::after {
-      content: "";
-      position: absolute;
-      inset: 48% 0 0;
-      background: #252340;
-      clip-path: polygon(0 64%,11% 38%,22% 68%,34% 30%,47% 68%,57% 49%,69% 74%,82% 38%,91% 66%,100% 42%,100% 100%,0 100%);
-    }
+    .cauldron{position:absolute;left:8%;bottom:7%;width:clamp(145px,19vw,270px);height:clamp(92px,12vw,160px);border:8px solid #12101f;border-radius:15% 15% 45% 45%;background:linear-gradient(90deg,#211d32,#55405a 45%,#211b31);box-shadow:inset 10px 5px #756078,10px 12px rgba(4,3,12,.54)}
+    .cauldron::before{content:"";position:absolute;left:-4%;top:-13%;width:108%;height:26%;border:7px solid #12101f;border-radius:50%;background:radial-gradient(ellipse,#eaffcb 0 8%,#73ffbe 9% 43%,#1f8178 44% 68%,#12101f 69%);box-shadow:0 0 28px rgba(108,255,194,.55);animation:brew 1.3s steps(4) infinite}
+    .cauldron::after{content:"";position:absolute;left:22%;bottom:-17%;width:18%;height:31%;background:#20182b;border:6px solid #12101f;box-shadow:clamp(70px,9vw,126px) 0 #20182b}
+    @keyframes brew{50%{filter:hue-rotate(25deg) brightness(1.25)}}
+    .steam{position:absolute;left:17%;bottom:22%;width:22px;height:22px;background:rgba(125,255,202,.65);box-shadow:28px -40px 0 7px rgba(125,255,202,.42),-7px -79px 0 12px rgba(125,255,202,.22);animation:steam 3s ease-in-out infinite}
+    @keyframes steam{50%{translate:7px -16px;scale:1.12;opacity:.45}}
 
-    .ground {
-      position: absolute;
-      z-index: 4;
-      inset: auto 0 0;
-      height: 23vh;
-      min-height: 145px;
-      border-top: 8px solid #24213e;
-      background:
-        linear-gradient(90deg, transparent 0 49%, rgba(23,19,43,.18) 50% 53%, transparent 54%) 0 0 / 48px 48px,
-        linear-gradient(#554962, #322d48);
-      box-shadow: inset 0 10px #6e596b;
-    }
+    .character{position:absolute;z-index:5;filter:drop-shadow(7px 8px rgba(3,3,10,.5))}
+    .alchemist{left:27%;bottom:15%;width:64px;height:105px;animation:walk 8s steps(8) infinite}
+    .alchemist .hat{position:absolute;left:2px;top:0;width:55px;height:42px;background:linear-gradient(135deg,#b88cff,#61409e);border:5px solid #141126;clip-path:polygon(46% 0,68% 55%,100% 72%,90% 100%,5% 100%,0 75%,38% 58%)}
+    .alchemist .head{position:absolute;left:17px;top:37px;width:35px;height:34px;border:5px solid #141126;background:#df9d72;box-shadow:inset 5px 0 #f3c38c}
+    .alchemist .head::after{content:"";position:absolute;right:4px;top:9px;width:5px;height:5px;background:#171326;box-shadow:-14px 0 #171326}
+    .alchemist .body{position:absolute;left:9px;top:65px;width:49px;height:40px;border:5px solid #141126;background:linear-gradient(90deg,#503474,#8a5fc0 55%,#3f2a62);clip-path:polygon(18% 0,82% 0,100% 100%,0 100%)}
+    @keyframes walk{0%,100%{translate:-13vw 0}45%,55%{translate:5vw 0}50%{translate:5vw -5px}}
 
-    .scene {
-      position: absolute;
-      inset: 0;
-      z-index: 5;
-      pointer-events: none;
-    }
+    .slime{right:30%;bottom:17%;width:48px;height:40px;border:5px solid #111023;border-radius:52% 52% 18% 18%;background:linear-gradient(135deg,#c9ff8d,#51d98c 65%,#24877e);box-shadow:inset 7px 6px rgba(255,255,255,.28),0 0 17px rgba(115,255,177,.48);animation:hop 3.4s steps(5) infinite}
+    .slime::before{content:"";position:absolute;left:9px;top:13px;width:5px;height:7px;background:#161229;box-shadow:17px 0 #161229}
+    .slime::after{content:"";position:absolute;left:17px;top:25px;width:8px;height:4px;background:#27735f}
+    @keyframes hop{45%{translate:20px 0;scale:1.1 .88}55%{translate:25px -25px;scale:.9 1.14}70%{translate:39px 0}}
 
-    .tower {
-      position: absolute;
-      right: clamp(-30px, 4vw, 80px);
-      bottom: 14vh;
-      width: clamp(170px, 22vw, 310px);
-      height: clamp(280px, 44vw, 510px);
-      border: 8px solid #201c36;
-      background:
-        linear-gradient(90deg, rgba(255,255,255,.07), transparent 22% 72%, rgba(12,10,29,.24)),
-        repeating-linear-gradient(0deg, #50465f 0 22px, #312b49 23px 28px);
-      box-shadow: inset 8px 0 #70617a, inset -10px 0 #29243f, 15px 15px 0 rgba(16,13,33,.48);
-      clip-path: polygon(12% 8%,24% 8%,24% 0,39% 0,39% 8%,61% 8%,61% 0,76% 0,76% 8%,88% 8%,88% 17%,100% 17%,100% 100%,0 100%,0 17%,12% 17%);
-    }
-    .tower-window {
-      position: absolute;
-      top: 27%;
-      left: 29%;
-      width: 44%;
-      aspect-ratio: .74;
-      border: 7px solid #201c36;
-      background:
-        linear-gradient(90deg, transparent 44%, #2a4660 45% 55%, transparent 56%),
-        linear-gradient(#baffeb 0 9%, #6ce9db 10% 57%, #2e8f9a 58%);
-      box-shadow: inset 0 0 0 7px #2f7080, 0 0 27px rgba(103,241,223,.33);
-      clip-path: polygon(18% 0,82% 0,100% 18%,100% 100%,0 100%,0 18%);
-    }
-    .tower-door {
-      position: absolute;
-      left: 31%;
-      bottom: -3%;
-      width: 38%;
-      height: 31%;
-      border: 7px solid #231e38;
-      border-radius: 50% 50% 0 0;
-      background: linear-gradient(90deg, #181426, #39304b 48%, #171323 50%);
-      box-shadow: inset 0 0 0 6px #4c3d55;
-    }
-    .chimney {
-      position: absolute;
-      right: clamp(62px, 13vw, 205px);
-      bottom: calc(14vh + min(44vw, 510px) - 14px);
-      width: 38px;
-      height: 66px;
-      border: 6px solid #201c36;
-      background: linear-gradient(90deg, #71627c, #3a324f);
-    }
-    .smoke {
-      position: absolute;
-      right: clamp(67px, 13vw, 210px);
-      bottom: calc(14vh + min(44vw, 510px) + 55px);
-      width: 28px;
-      height: 28px;
-      background: rgba(207,200,228,.56);
-      box-shadow: -18px -24px 0 8px rgba(207,200,228,.48), 8px -54px 0 16px rgba(207,200,228,.35), -16px -92px 0 23px rgba(207,200,228,.18);
-      animation: breathe 4s ease-in-out infinite;
-    }
-    @keyframes breathe { 50% { translate: 0 -9px; scale: 1.08; opacity: .65; } }
+    .ghost{left:17%;top:25%;width:46px;height:55px;border:5px solid #292044;border-radius:50% 50% 20% 20%;background:rgba(187,244,239,.68);box-shadow:inset 7px 5px rgba(255,255,255,.35),0 0 22px rgba(111,243,229,.38);animation:float 4.6s ease-in-out infinite}
+    .ghost::before{content:"";position:absolute;left:9px;top:17px;width:5px;height:8px;background:#292044;box-shadow:17px 0 #292044}
+    .ghost::after{content:"";position:absolute;left:-5px;right:-5px;bottom:-8px;height:16px;background:rgba(187,244,239,.68);clip-path:polygon(0 0,100% 0,100% 45%,80% 100%,61% 45%,42% 100%,22% 45%,0 100%)}
+    @keyframes float{50%{translate:13px -21px;rotate:4deg}}
 
-    .lab-table {
-      position: absolute;
-      left: clamp(-55px, 2vw, 38px);
-      bottom: 8vh;
-      width: clamp(260px, 36vw, 530px);
-      height: 32px;
-      border: 7px solid var(--line);
-      background: linear-gradient(#c17a48 0 20%, #8a4e3f 21% 70%, #553047 71%);
-      box-shadow: inset 0 -7px #49283d, 0 12px #35243d, 30px 88px 0 -8px #302038, calc(100% - 42px) 88px 0 -8px #302038;
-    }
+    .raven{right:21%;top:20%;width:35px;height:30px;background:#25203c;border:5px solid #100e1d;clip-path:polygon(0 27%,34% 20%,42% 0,56% 26%,100% 40%,66% 57%,58% 100%,38% 67%,4% 63%);animation:flap 2.7s steps(4) infinite}
+    @keyframes flap{50%{scale:1 -.7;translate:0 -5px}}
 
-    .bottle {
-      --liquid: var(--aqua);
-      --liquid-dark: #1d8b91;
-      position: absolute;
-      bottom: 26px;
-      width: 88px;
-      height: 132px;
-      filter: drop-shadow(9px 12px 0 rgba(15,12,31,.48)) drop-shadow(0 0 14px color-mix(in srgb, var(--liquid) 45%, transparent));
-    }
-    .bottle::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border: 6px solid #1f1a39;
-      background:
-        linear-gradient(90deg, rgba(255,255,255,.72) 0 8%, transparent 9% 18%, rgba(255,255,255,.2) 19% 25%, transparent 26% 79%, rgba(15,31,55,.33) 80%),
-        linear-gradient(0deg, var(--liquid-dark) 0 8%, var(--liquid) 9% 50%, rgba(172,255,243,.28) 51% 100%);
-      box-shadow: inset 7px 0 rgba(255,255,255,.2), inset -8px 0 rgba(16,27,48,.3), inset 0 -10px var(--liquid-dark);
-      clip-path: polygon(35% 0,65% 0,65% 28%,88% 55%,96% 70%,96% 94%,89% 100%,11% 100%,4% 94%,4% 70%,12% 55%,35% 28%);
-    }
-    .bottle::after {
-      content: "";
-      position: absolute;
-      z-index: 2;
-      top: -10px;
-      left: 29px;
-      width: 31px;
-      height: 21px;
-      border: 5px solid #1f1a39;
-      background: linear-gradient(90deg, #c68a57 0 20%, #8b553f 21% 78%, #563147 79%);
-      box-shadow: 0 5px #2e2040;
-    }
-    .bottle .shine {
-      position: absolute;
-      z-index: 3;
-      left: 22px;
-      top: 56px;
-      width: 8px;
-      height: 30px;
-      background: rgba(255,255,255,.72);
-      box-shadow: 10px -15px 0 -2px rgba(255,255,255,.54), 26px 42px 0 -2px rgba(255,255,255,.34);
-    }
-    .bottle .bubble {
-      position: absolute;
-      z-index: 3;
-      left: 47px;
-      bottom: 19px;
-      width: 8px;
-      height: 8px;
-      border: 2px solid rgba(255,255,255,.74);
-      animation: bubble 2.2s steps(5) infinite;
-    }
-    .bottle .label {
-      position: absolute;
-      z-index: 4;
-      left: 22px;
-      bottom: 18px;
-      width: 47px;
-      height: 31px;
-      border: 4px solid #4b3150;
-      background: #ffdda0;
-      box-shadow: inset 0 0 0 3px #c9835c;
-    }
-    .bottle .label::after {
-      content: "✦";
-      display: grid;
-      height: 100%;
-      place-items: center;
-      color: #683754;
-      font-size: 13px;
-    }
-    .bottle-a { left: 8%; scale: .78; transform-origin: bottom; --liquid: var(--mint); --liquid-dark: #369a6b; }
-    .bottle-b { left: 31%; }
-    .bottle-c { left: 61%; scale: .67; transform-origin: bottom; --liquid: var(--rose); --liquid-dark: #a83771; }
-    .bottle-c::before { clip-path: polygon(38% 0,62% 0,62% 34%,77% 43%,92% 62%,96% 88%,88% 100%,12% 100%,4% 88%,8% 62%,23% 43%,38% 34%); }
-    @keyframes bubble { to { translate: -7px -43px; opacity: 0; } }
+    .spark{position:absolute;z-index:4;color:#fff0a3;font-size:20px;text-shadow:0 0 14px #ffe384;animation:twinkle 2.3s steps(4) infinite}.s1{left:23%;top:17%}.s2{right:27%;top:39%;animation-delay:-.8s}.s3{left:43%;bottom:19%;animation-delay:-1.5s}
+    @keyframes twinkle{50%{scale:.45;rotate:45deg;opacity:.34}}
 
-    .spark {
-      position: absolute;
-      z-index: 7;
-      color: #fff0ac;
-      font-size: 24px;
-      text-shadow: 3px 3px #552e58, 0 0 14px #ffe092;
-      animation: twinkle 2.4s steps(4) infinite;
-    }
-    .spark-a { left: 12vw; top: 35vh; }
-    .spark-b { right: 25vw; top: 22vh; animation-delay: -.8s; }
-    .spark-c { right: 6vw; top: 52vh; animation-delay: -1.6s; }
-    @keyframes twinkle { 50% { scale: .55; rotate: 45deg; opacity: .42; } }
+    .hero{position:relative;z-index:12;width:min(780px,calc(100vw - 38px));margin-top:-3vh;text-align:center}
+    .hero-panel{position:relative;padding:clamp(32px,5vw,58px) clamp(22px,6vw,72px) clamp(30px,4.5vw,48px);border:1px solid rgba(186,163,255,.46);background:linear-gradient(145deg,rgba(40,31,67,.84),rgba(13,13,29,.9));box-shadow:inset 0 0 0 4px rgba(18,15,34,.8),inset 0 0 54px rgba(128,92,199,.12),0 26px 80px rgba(3,3,13,.58),0 0 0 8px rgba(17,14,31,.58);backdrop-filter:blur(10px);clip-path:polygon(22px 0,calc(100% - 22px) 0,100% 22px,100% calc(100% - 22px),calc(100% - 22px) 100%,22px 100%,0 calc(100% - 22px),0 22px)}
+    .hero-panel::before{content:"";position:absolute;inset:12px;border:1px solid rgba(255,218,129,.16);clip-path:inherit;pointer-events:none}
+    .rune{display:inline-flex;align-items:center;gap:10px;margin:0 0 20px;padding:8px 13px;color:#cfc2ed;border:1px solid #6f5c8f;background:rgba(20,16,38,.78);box-shadow:0 4px #0c0a18;font-size:10px;font-weight:900;letter-spacing:.18em;text-transform:uppercase}
+    .rune::before{content:"";width:7px;height:7px;background:var(--mint);box-shadow:0 0 10px var(--mint);animation:pulse 2s steps(4) infinite}
+    h1{margin:0;color:#fff2b8;font-size:clamp(53px,9.5vw,112px);font-weight:1000;line-height:.78;letter-spacing:-.09em;text-shadow:0 4px #ffc95e,0 8px #d17949,0 12px #74394d,5px 17px #0c0a1a,-3px 0 #4b3157,3px 0 #4b3157}
+    h1 span{display:block;margin-top:.3em;color:#f6c760;font-size:.52em;letter-spacing:.24em;text-shadow:0 4px #ad6348,0 8px #583047,4px 12px #0d0b1b}
+    .lead{max-width:610px;margin:29px auto 24px;color:#eee7dc;font-family:ui-rounded,"Trebuchet MS",sans-serif;font-size:clamp(15px,1.7vw,19px);font-weight:600;line-height:1.62;text-shadow:2px 2px #121024}.lead strong{color:#a0f8d4}
+    .cta{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:57px;padding:13px 24px;color:#34203d;border:4px solid #382642;border-radius:0;background:linear-gradient(#ffe999 0 15%,#ffd05f 16% 70%,#e99047 71%);box-shadow:inset 5px 5px rgba(255,255,255,.22),0 7px #924e3d,7px 13px rgba(5,4,14,.58);font-size:13px;font-weight:1000;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:.14s}.cta::before{content:"✦"}.cta:hover{filter:brightness(1.1);translate:0 -2px;box-shadow:inset 5px 5px rgba(255,255,255,.22),0 9px #924e3d,7px 15px rgba(5,4,14,.58)}.cta:active{translate:0 5px;box-shadow:inset 5px 5px rgba(255,255,255,.16),0 2px #924e3d,3px 6px rgba(5,4,14,.58)}
+    .cta:focus-visible,.close:focus-visible,input:focus-visible{outline:4px solid var(--aqua);outline-offset:4px}.micro{margin:18px 0 0;color:#aca0c2;font-size:9px;letter-spacing:.16em;text-transform:uppercase}
+    .brand{position:absolute;z-index:15;left:20px;bottom:16px;margin:0;color:rgba(255,244,210,.52);font-size:9px;letter-spacing:.17em;text-transform:uppercase}
 
-    .hero {
-      position: relative;
-      z-index: 12;
-      width: min(760px, calc(100vw - 40px));
-      margin-top: -5vh;
-      text-align: center;
-    }
-    .hero-panel {
-      position: relative;
-      padding: clamp(26px, 4.5vw, 48px) clamp(20px, 5vw, 64px) clamp(28px, 4vw, 42px);
-      border: 5px solid #292044;
-      background:
-        linear-gradient(135deg, rgba(255,255,255,.11) 0 1px, transparent 2px 22px) 0 0 / 24px 24px,
-        linear-gradient(145deg, rgba(48,40,82,.92), rgba(18,16,42,.94));
-      box-shadow:
-        inset 0 0 0 5px #66557b,
-        inset 0 0 0 9px #292044,
-        inset 12px 12px 0 rgba(255,255,255,.04),
-        0 10px 0 #0d0b1d,
-        12px 20px 0 rgba(9,7,23,.4),
-        0 26px 70px rgba(8,6,23,.4);
-      clip-path: polygon(18px 0,calc(100% - 18px) 0,calc(100% - 18px) 5px,100% 5px,100% calc(100% - 18px),calc(100% - 5px) calc(100% - 18px),calc(100% - 5px) 100%,18px 100%,18px calc(100% - 5px),0 calc(100% - 5px),0 18px,5px 18px,5px 5px,18px 5px);
-    }
-    .hero-panel::before, .hero-panel::after {
-      content: "◆";
-      position: absolute;
-      top: 22px;
-      color: #c39161;
-      text-shadow: 3px 3px #36233f;
-    }
-    .hero-panel::before { left: 25px; }
-    .hero-panel::after { right: 25px; }
+    dialog{width:min(570px,calc(100% - 26px));padding:0;color:var(--cream);border:0;background:transparent;overflow:visible}dialog::backdrop{background:rgba(5,4,15,.82);backdrop-filter:blur(7px)}dialog[open]{animation:modal-in .2s steps(4)}@keyframes modal-in{from{opacity:0;translate:0 18px;scale:.96}}
+    .modal-card{position:relative;max-height:calc(100svh - 30px);overflow:auto;border:5px solid #171326;padding:clamp(27px,6vw,43px);background:linear-gradient(145deg,#45365e,#1c1835 70%);box-shadow:inset 0 0 0 4px #715b86,inset 0 0 0 8px #28203f,0 10px #090715,12px 19px rgba(3,3,10,.5);clip-path:polygon(17px 0,calc(100% - 17px) 0,100% 17px,100% calc(100% - 17px),calc(100% - 17px) 100%,17px 100%,0 calc(100% - 17px),0 17px)}
+    .close{position:absolute;z-index:2;top:16px;right:16px;display:grid;width:38px;height:38px;place-items:center;color:#f9dfad;border:3px solid #1c1730;background:#65415b;box-shadow:3px 3px #100d21;font-size:21px;font-weight:900;cursor:pointer}
+    .modal-icon{display:grid;width:65px;aspect-ratio:1;margin:0 auto 17px;place-items:center;color:#27203c;border:5px solid #211a37;background:linear-gradient(135deg,#d5fff1,#62e7d4 57%,#328c96);box-shadow:inset 6px 6px rgba(255,255,255,.28),6px 7px #120f24,0 0 25px rgba(87,234,223,.25);font-size:28px;clip-path:polygon(14% 0,86% 0,100% 14%,100% 86%,86% 100%,14% 100%,0 86%,0 14%)}
+    .modal-card h2{margin:0;color:#ffe99f;text-align:center;font-size:clamp(23px,6vw,34px);letter-spacing:-.045em;text-shadow:0 4px #884d4e,4px 7px #120e23}.modal-copy{margin:14px auto 22px;color:#e4dace;font-family:ui-rounded,"Trebuchet MS",sans-serif;line-height:1.5;text-align:center}
+    .fields{display:grid;gap:14px}label{display:block;margin-bottom:7px;color:#d8c9ef;font-size:10px;font-weight:900;letter-spacing:.13em;text-transform:uppercase}input{width:100%;height:51px;padding:0 14px;color:#211a35;border:4px solid #211a35;border-radius:0;background:#fff5d8;box-shadow:inset 5px 5px #ddcdae,4px 5px #100d20;font-family:ui-rounded,"Trebuchet MS",sans-serif;font-size:15px}input::placeholder{color:#81727d}.submit{width:100%;margin-top:18px}.privacy{margin:13px 0 0;color:#aa9db7;font-size:9px;line-height:1.5;text-align:center}.success{display:none;text-align:center}.success[aria-hidden="false"]{display:block}.success .modal-copy{margin-bottom:3px}
 
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 9px;
-      margin: 0 0 18px;
-      padding: 8px 12px;
-      color: #dbd3ef;
-      border: 3px solid #75658c;
-      background: #231d42;
-      box-shadow: 4px 4px 0 #100d25, inset 0 3px rgba(255,255,255,.05);
-      font-size: clamp(10px, 1.1vw, 13px);
-      font-weight: 800;
-      letter-spacing: .17em;
-      text-transform: uppercase;
-    }
-    .eyebrow::before { content: ""; width: 7px; height: 7px; background: var(--mint); box-shadow: 0 0 8px var(--mint); }
-
-    h1 {
-      margin: 0;
-      color: #fff1b0;
-      font-size: clamp(47px, 8.8vw, 106px);
-      font-weight: 1000;
-      line-height: .79;
-      letter-spacing: -.085em;
-      text-shadow:
-        0 4px #ffc863,
-        0 8px #ce7d4e,
-        0 12px #76394b,
-        6px 17px #100d23,
-        -4px 0 #4b2e55,
-        4px 0 #4b2e55;
-    }
-    h1 span {
-      display: block;
-      margin-top: .28em;
-      color: #f5c35d;
-      font-size: .57em;
-      letter-spacing: .2em;
-      text-shadow: 0 4px #b96c42, 0 8px #663548, 5px 12px #100d23;
-    }
-    .lead {
-      max-width: 590px;
-      margin: 27px auto 24px;
-      color: #f2ead7;
-      font-family: ui-rounded, "Trebuchet MS", sans-serif;
-      font-size: clamp(15px, 1.7vw, 19px);
-      font-weight: 600;
-      line-height: 1.65;
-      text-shadow: 2px 2px #17122e;
-    }
-    .lead strong { color: #a9f8d7; font-weight: 800; }
-
-    .cta {
-      position: relative;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 11px;
-      min-height: 56px;
-      padding: 13px 22px;
-      color: #38213f;
-      border: 4px solid #3d2945;
-      border-radius: 0;
-      background: linear-gradient(#ffe58a 0 16%, #ffc95e 17% 72%, #e89047 73%);
-      box-shadow: inset 5px 5px rgba(255,255,255,.2), 0 7px 0 var(--gold-deep), 7px 13px 0 rgba(12,9,28,.58);
-      font-size: 14px;
-      font-weight: 1000;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: translate .12s, box-shadow .12s, filter .12s;
-    }
-    .cta::before { content: "✦"; font-size: 17px; }
-    .cta:hover { filter: brightness(1.08); translate: 0 -2px; box-shadow: inset 5px 5px rgba(255,255,255,.2), 0 9px 0 var(--gold-deep), 7px 15px 0 rgba(12,9,28,.58); }
-    .cta:active { translate: 0 5px; box-shadow: inset 5px 5px rgba(255,255,255,.14), 0 2px 0 var(--gold-deep), 3px 6px 0 rgba(12,9,28,.58); }
-    .cta:focus-visible, .close:focus-visible, input:focus-visible { outline: 4px solid var(--aqua); outline-offset: 5px; }
-    .micro { margin: 18px 0 0; color: #bcb1d1; font-size: 10px; letter-spacing: .13em; text-transform: uppercase; }
-
-    .brand {
-      position: absolute;
-      z-index: 15;
-      left: 20px;
-      bottom: 17px;
-      margin: 0;
-      color: rgba(255,243,207,.66);
-      font-size: 10px;
-      letter-spacing: .16em;
-      text-transform: uppercase;
-    }
-
-    dialog {
-      width: min(520px, calc(100% - 28px));
-      padding: 0;
-      color: var(--cream);
-      border: 0;
-      background: transparent;
-      overflow: visible;
-    }
-    dialog::backdrop { background: rgba(8,6,22,.78); backdrop-filter: blur(5px); }
-    dialog[open] { animation: modal-in .18s steps(3); }
-    @keyframes modal-in { from { opacity: 0; translate: 0 16px; scale: .96; } }
-
-    .modal-card {
-      position: relative;
-      border: 5px solid #211a39;
-      padding: clamp(25px, 6vw, 42px);
-      background:
-        linear-gradient(135deg, rgba(255,255,255,.1) 0 1px, transparent 2px 19px) 0 0 / 20px 20px,
-        linear-gradient(145deg, #46395f, #201a3d 68%);
-      box-shadow: inset 0 0 0 5px #756087, inset 0 0 0 9px #29203f, 0 10px 0 #0b0919, 12px 20px 0 rgba(5,4,15,.45);
-      clip-path: polygon(16px 0,calc(100% - 16px) 0,calc(100% - 16px) 5px,100% 5px,100% calc(100% - 16px),calc(100% - 5px) calc(100% - 16px),calc(100% - 5px) 100%,16px 100%,16px calc(100% - 5px),0 calc(100% - 5px),0 16px,5px 16px,5px 5px,16px 5px);
-    }
-    .close {
-      position: absolute;
-      top: 17px;
-      right: 17px;
-      display: grid;
-      width: 38px;
-      height: 38px;
-      place-items: center;
-      color: #f5dba4;
-      border: 3px solid #261d3d;
-      border-radius: 0;
-      background: #65405a;
-      box-shadow: 3px 3px 0 #130f27;
-      font-size: 21px;
-      font-weight: 900;
-      cursor: pointer;
-    }
-    .modal-icon {
-      display: grid;
-      width: 68px;
-      aspect-ratio: 1;
-      margin: 0 auto 19px;
-      place-items: center;
-      color: #2b2441;
-      border: 5px solid #2a203e;
-      background: linear-gradient(135deg, #c8fff0, #62decf 58%, #2f8993);
-      box-shadow: inset 6px 6px rgba(255,255,255,.28), 6px 7px 0 #151128, 0 0 24px rgba(103,241,223,.28);
-      font-size: 29px;
-      clip-path: polygon(14% 0,86% 0,86% 7%,100% 7%,100% 86%,86% 86%,86% 100%,14% 100%,14% 93%,0 93%,0 14%,14% 14%);
-    }
-    .modal-card h2 { margin: 0; color: #ffe89c; text-align: center; font-size: clamp(24px, 6vw, 34px); letter-spacing: -.04em; text-shadow: 0 4px #8b4e4e, 4px 7px #161027; }
-    .modal-copy { margin: 16px auto 23px; color: #e7ddcf; font-family: ui-rounded, "Trebuchet MS", sans-serif; line-height: 1.55; text-align: center; }
-    label { display: block; margin-bottom: 9px; color: #d9ccef; font-size: 11px; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
-    .field-row { display: grid; grid-template-columns: 1fr auto; gap: 10px; }
-    input {
-      width: 100%;
-      min-width: 0;
-      height: 54px;
-      padding: 0 15px;
-      color: #221b38;
-      border: 4px solid #251d3a;
-      border-radius: 0;
-      background: #fff4d4;
-      box-shadow: inset 5px 5px #dacaa8, 4px 5px 0 #130f27;
-      font-family: ui-rounded, "Trebuchet MS", sans-serif;
-      font-size: 16px;
-    }
-    input::placeholder { color: #796c79; }
-    .submit { min-width: 132px; }
-    .privacy { margin: 14px 0 0; color: #aa9eba; font-size: 10px; line-height: 1.5; text-align: center; }
-    .success { display: none; text-align: center; }
-    .success[aria-hidden="false"] { display: block; }
-    .success .modal-copy { margin-bottom: 5px; }
-
-    @media (max-width: 720px) {
-      .world { padding: 30px 16px 92px; align-items: start; }
-      .hero { margin-top: 7vh; width: min(100%, 590px); }
-      .hero-panel { padding-top: 31px; }
-      .hero-panel::before, .hero-panel::after { top: 17px; font-size: 11px; }
-      .moon { top: 3vh; right: 3vw; opacity: .82; }
-      .tower { right: -78px; bottom: 12vh; opacity: .82; }
-      .chimney { right: 37px; bottom: calc(12vh + min(44vw, 510px) - 13px); }
-      .smoke { display: none; }
-      .lab-table { left: -65px; bottom: 7vh; scale: .72; transform-origin: left bottom; }
-      .ground { height: 20vh; }
-      .mountains { bottom: 13vh; }
-      .spark-a { left: 4vw; top: 61vh; }
-      .spark-c { display: none; }
-      h1 { font-size: clamp(48px, 16vw, 76px); }
-      .lead { margin-top: 25px; }
-    }
-    @media (max-width: 490px) {
-      .world { min-height: 780px; }
-      .hero { margin-top: 4vh; }
-      .hero-panel { padding-inline: 18px; }
-      .eyebrow { letter-spacing: .1em; }
-      .lead { font-size: 15px; line-height: 1.55; }
-      .field-row { grid-template-columns: 1fr; }
-      .submit { width: 100%; }
-      .modal-card { padding: 28px 20px 25px; }
-      .modal-icon { margin-top: 6px; }
-    }
-    @media (max-height: 720px) and (min-width: 721px) {
-      .hero { margin-top: 0; }
-      .hero-panel { padding-block: 24px 26px; }
-      h1 { font-size: clamp(50px, 10vh, 75px); }
-      .lead { margin-block: 20px 17px; }
-      .micro { margin-top: 13px; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .001ms !important; animation-iteration-count: 1 !important; }
-      .cloud-a { left: 5vw; }
-      .cloud-b { left: 62vw; }
-    }
+    @media(max-width:760px){.world{padding:28px 15px 75px;align-items:start}.hero{margin-top:7vh}.hero-panel{padding-top:38px}.window{width:76vw;height:35%;opacity:.76}.shelf{width:37vw;opacity:.7}.shelf.left{left:-7%;top:30%}.shelf.right{right:-7%;top:28%}.pipe{opacity:.65}.reactor{right:-35px;bottom:10%;opacity:.8}.cauldron{left:-40px;bottom:9%;opacity:.8}.steam{left:5%}.alchemist{left:27%;bottom:13%;opacity:.84}.slime{right:23%;bottom:14%}.ghost{left:7%;top:34%}.raven{right:8%;top:21%}h1{font-size:clamp(51px,16vw,79px)}.lead{font-size:15px}.floor{height:20%}}
+    @media(max-width:480px){.world{min-height:790px}.hero{margin-top:4vh;width:calc(100vw - 24px)}.hero-panel{padding-inline:18px}.rune{font-size:8px;letter-spacing:.11em}.modal-card{padding:29px 19px 25px}.modal-icon{margin-top:5px}.ghost{display:none}.alchemist{left:23%}.micro{line-height:1.5}}
+    @media(max-height:720px) and (min-width:761px){.hero{margin-top:0}.hero-panel{padding-block:25px 27px}h1{font-size:clamp(54px,10vh,76px)}.lead{margin-block:20px 17px}.micro{margin-top:13px}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important}}
   </style>
 </head>
 <body>
   <main class="world">
-    <div class="stars" aria-hidden="true"></div>
-    <div class="moon" aria-hidden="true"></div>
-    <div class="cloud cloud-a" aria-hidden="true"></div>
-    <div class="cloud cloud-b" aria-hidden="true"></div>
-    <div class="mountains" aria-hidden="true"></div>
-
-    <div class="scene" aria-hidden="true">
-      <span class="spark spark-a">✦</span>
-      <span class="spark spark-b">✦</span>
-      <span class="spark spark-c">✦</span>
-      <div class="smoke"></div>
-      <div class="chimney"></div>
-      <div class="tower"><i class="tower-window"></i><i class="tower-door"></i></div>
-      <div class="lab-table">
-        <div class="bottle bottle-a"><i class="shine"></i><i class="bubble"></i><i class="label"></i></div>
-        <div class="bottle bottle-b"><i class="shine"></i><i class="bubble"></i><i class="label"></i></div>
-        <div class="bottle bottle-c"><i class="shine"></i><i class="bubble"></i><i class="label"></i></div>
-      </div>
+    <div class="lab" aria-hidden="true">
+      <div class="wall"></div><div class="beam top"></div><div class="beam left"></div><div class="beam right"></div>
+      <div class="window"></div><div class="aurora"></div><div class="pipe p1"></div><div class="pipe p2"></div>
+      <div class="shelf left"><i class="vial v1"></i><i class="vial v2"></i><i class="vial v3"></i><i class="vial v4"></i></div>
+      <div class="shelf right"><i class="vial v1"></i><i class="vial v2"></i><i class="vial v3"></i><i class="vial v4"></i></div>
+      <div class="reactor"></div><div class="cauldron"></div><div class="steam"></div>
+      <div class="character alchemist"><i class="hat"></i><i class="head"></i><i class="body"></i></div>
+      <div class="character slime"></div><div class="character ghost"></div><div class="character raven"></div>
+      <span class="spark s1">✦</span><span class="spark s2">✦</span><span class="spark s3">✦</span>
+      <div class="floor"></div><div class="floor-glow"></div>
     </div>
-    <div class="ground" aria-hidden="true"></div>
 
     <section class="hero" aria-labelledby="title">
       <div class="hero-panel">
-        <p class="eyebrow">A curious little world is coming to life</p>
+        <p class="rune">Experiment 001 · Portal stabilizing</p>
         <h1 id="title">ALCHEMIST<span>LAB</span></h1>
-        <p class="lead">We’re turning wild ideas into <strong>small, wonderful things</strong> you’ll want to keep. Come peek behind the lab door before everyone else.</p>
-        <button class="cta" id="open-waitlist" type="button">Get early access</button>
-        <p class="micro">First arrivals get the best seat in the lab</p>
+        <p class="lead">A living laboratory where strange ideas become <strong>onchain experiments</strong>. The doors are almost open—claim your place before the first reaction begins.</p>
+        <button class="cta" id="open-waitlist" type="button">Enter the experiment</button>
+        <p class="micro">Limited genesis access · built for the curious</p>
       </div>
     </section>
-
-    <p class="brand">© 2026 Alchemist Lab</p>
+    <p class="brand">© 2026 Alchemist Lab · Sector 07</p>
   </main>
 
   <dialog id="waitlist-modal" aria-labelledby="modal-title">
     <div class="modal-card">
-      <button class="close" type="button" aria-label="Close waitlist form">×</button>
+      <button class="close" type="button" aria-label="Close access form">×</button>
       <div id="waitlist-form-view">
         <div class="modal-icon" aria-hidden="true">✦</div>
-        <h2 id="modal-title">You found the secret door.</h2>
-        <p class="modal-copy">Leave your email and we’ll send you a note when the lab is ready to welcome its first visitors.</p>
+        <h2 id="modal-title">Prove you found the lab.</h2>
+        <p class="modal-copy">Drop your X identity, link your comment, and choose the EVM wallet that will enter the experiment.</p>
         <form id="waitlist-form">
-          <label for="email">Your email</label>
-          <div class="field-row">
-            <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
-            <button class="cta submit" type="submit">Count me in</button>
+          <div class="fields">
+            <div><label for="x-handle">X username</label><input id="x-handle" name="xHandle" type="text" autocomplete="off" placeholder="@yourname" pattern="@?[A-Za-z0-9_]{1,15}" title="Enter a valid X username (1–15 letters, numbers, or underscores)." required></div>
+            <div><label for="comment-link">X comment link</label><input id="comment-link" name="commentLink" type="url" inputmode="url" placeholder="https://x.com/yourname/status/..." pattern="https://(www\.)?(x\.com|twitter\.com)/.+/status/[0-9]+.*" title="Paste a valid X or Twitter post/comment link." required></div>
+            <div><label for="wallet">EVM wallet</label><input id="wallet" name="wallet" type="text" inputmode="text" autocomplete="off" placeholder="0x..." pattern="0x[a-fA-F0-9]{40}" title="Enter a valid 42-character EVM wallet address." required></div>
           </div>
-          <p class="privacy">Only meaningful updates. No spam, no mysterious scrolls.</p>
+          <button class="cta submit" type="submit">Seal my entry</button>
+          <p class="privacy">One identity. One wallet. No spam from the laboratory.</p>
         </form>
       </div>
       <div class="success" id="success-view" aria-hidden="true" role="status">
         <div class="modal-icon" aria-hidden="true">✓</div>
-        <h2>You’re on the list.</h2>
-        <p class="modal-copy">The door is saved for you. We’ll be in touch when it’s time to step inside.</p>
+        <h2>Entry sealed.</h2>
+        <p class="modal-copy">Your coordinates are locked in. Watch X—the laboratory will signal when the portal opens.</p>
       </div>
     </div>
   </dialog>
 
   <script>
-    const modal = document.querySelector('#waitlist-modal');
-    const openButton = document.querySelector('#open-waitlist');
-    const closeButton = modal.querySelector('.close');
-    const form = document.querySelector('#waitlist-form');
-    const formView = document.querySelector('#waitlist-form-view');
-    const successView = document.querySelector('#success-view');
-
-    openButton.addEventListener('click', () => modal.showModal());
-    closeButton.addEventListener('click', () => modal.close());
-    modal.addEventListener('click', event => {
-      if (event.target === modal) modal.close();
-    });
-    form.addEventListener('submit', event => {
+    const modal=document.querySelector('#waitlist-modal'),form=document.querySelector('#waitlist-form'),formView=document.querySelector('#waitlist-form-view'),successView=document.querySelector('#success-view');
+    document.querySelector('#open-waitlist').addEventListener('click',()=>modal.showModal());
+    modal.querySelector('.close').addEventListener('click',()=>modal.close());
+    modal.addEventListener('click',event=>{if(event.target===modal)modal.close()});
+    form.addEventListener('submit',event=>{
       event.preventDefault();
-      if (!form.reportValidity()) return;
-      // ponytail: local acknowledgement only; replace with the chosen waitlist API when persistence is required.
-      localStorage.setItem('alchemist-lab-waitlist', form.email.value.trim());
-      formView.hidden = true;
-      successView.setAttribute('aria-hidden', 'false');
+      if(!form.reportValidity())return;
+      // ponytail: browser-local registration only; replace this write with the campaign API when one exists.
+      localStorage.setItem('alchemist-lab-entry',JSON.stringify(Object.fromEntries(new FormData(form))));
+      formView.hidden=true;
+      successView.setAttribute('aria-hidden','false');
     });
   </script>
 </body>
