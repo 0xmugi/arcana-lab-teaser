@@ -36,12 +36,13 @@
     dialog{width:min(510px,calc(100% - 28px));padding:0;border:0;background:transparent;color:var(--paper)}
     dialog::backdrop{background:#070504d9;backdrop-filter:blur(5px)}
     dialog[open]{animation:show .2s ease-out}
-    .panel{position:relative;padding:42px clamp(24px,6vw,48px);border:1px solid #9f7948;background:linear-gradient(145deg,#2a2118f5,var(--panel));box-shadow:0 24px 80px #000,inset 0 0 0 4px #0d0a07}
+    .panel{position:relative;padding:42px clamp(24px,6vw,48px);border:1px solid #9f7948;background:linear-gradient(#17130ecf,#17130ecf),url('mid-box.png') center/100% 100% no-repeat;box-shadow:0 24px 80px #000,inset 0 0 0 4px #0d0a07}
     .close{position:absolute;top:14px;right:14px;width:34px;height:34px;border:1px solid #7c6547;background:#17110d;color:#d4c4a6;font-size:20px;cursor:pointer}
     .folio{margin:0 0 12px;color:var(--gold);font-size:9px;letter-spacing:.2em;text-transform:uppercase}
     h2{margin:0;font-family:Georgia,serif;font-size:clamp(30px,6vw,42px);font-weight:400;line-height:1.05}
     .modal-copy{margin:14px 0 24px;color:#bdb097;font-family:Georgia,serif;font-size:14px;line-height:1.55}
     label{display:block;margin:0 0 7px;color:#c8b894;font-size:9px;font-weight:700;letter-spacing:.15em;text-transform:uppercase}
+    form label:not(:first-child){margin-top:14px}
     input{width:100%;height:48px;padding:0 13px;border:1px solid #65553e;border-radius:0;background:#0c0907;color:#f4e7c8;font-size:14px}
     input::placeholder{color:#6d6457}
     .submit{width:100%;margin-top:16px}
@@ -65,8 +66,7 @@
       <button class="cta" id="open-waitlist" type="button">Request clearance</button>
     </section>
     <p class="archive">Archive <b>AL–001</b><br>Reactor status: stable</p>
-    <!-- ponytail: repository is the docs ceiling; replace this href when dedicated docs ship. -->
-    <a class="docs" href="https://github.com/0xmugi/arcana-lab-teaser" target="_blank" rel="noreferrer">Docs ↗</a>
+    <a class="docs" href="docs.html">Docs ↗</a>
   </main>
 
   <dialog id="waitlist-modal" aria-labelledby="modal-title">
@@ -75,8 +75,10 @@
       <div id="form-view">
         <p class="folio">Genesis registry · AL–07</p>
         <h2 id="modal-title">Request laboratory clearance.</h2>
-        <p class="modal-copy">Leave the EVM address you intend to use. One entry per operator.</p>
+        <p class="modal-copy">Leave your X handle and the EVM address you intend to use. One entry per operator.</p>
         <form id="waitlist-form">
+          <label for="x-handle">X handle</label>
+          <input id="x-handle" name="xHandle" type="text" autocomplete="username" spellcheck="false" placeholder="@operator" pattern="@?[A-Za-z0-9_]{1,15}" title="Enter a valid X handle (up to 15 letters, numbers, or underscores)." required>
           <label for="wallet">EVM address</label>
           <input id="wallet" name="wallet" type="text" autocomplete="off" spellcheck="false" placeholder="0x0000..." pattern="0x[a-fA-F0-9]{40}" title="Enter a valid 42-character EVM wallet address." required>
           <button class="cta submit" type="submit">Enter the registry</button>
@@ -85,7 +87,7 @@
       <div class="success" id="success-view" aria-hidden="true" role="status">
         <p class="folio">Dossier received</p>
         <h2>Clearance pending.</h2>
-        <p class="modal-copy">Your address is in the local archive.</p>
+        <p class="modal-copy">Your X handle and address are in the local archive.</p>
       </div>
     </div>
   </dialog>
@@ -95,7 +97,7 @@
     document.querySelector('#open-waitlist').onclick=()=>modal.showModal();
     modal.querySelector('.close').onclick=()=>modal.close();
     modal.onclick=e=>{if(e.target===modal)modal.close()};
-    form.onsubmit=e=>{e.preventDefault();if(!form.reportValidity())return;localStorage.setItem('alchemist-lab-entry',new FormData(form).get('wallet'));document.querySelector('#form-view').hidden=true;document.querySelector('#success-view').setAttribute('aria-hidden','false')};
+    form.onsubmit=e=>{e.preventDefault();if(!form.reportValidity())return;localStorage.setItem('alchemist-lab-entry',JSON.stringify(Object.fromEntries(new FormData(form))));document.querySelector('#form-view').hidden=true;document.querySelector('#success-view').setAttribute('aria-hidden','false')};
   </script>
 </body>
 </html>
