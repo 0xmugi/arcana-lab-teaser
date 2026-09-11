@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10112b">
+  <meta name="description" content="An alchemical world is brewing. The waitlist opens soon.">
+  <title>Alchemist Lab — Brewing Soon</title>
+  <style>
+    :root {
+      --ink: #17142e;
+      --night: #24224d;
+      --violet: #59518c;
+      --mist: #c5bee6;
+      --paper: #fff2cc;
+      --gold: #ffc857;
+      --gold-dark: #a35b35;
+      --acid: #9cf56b;
+      --cyan: #69e8da;
+      --rose: #fb7f8f;
+      --pixel: 4px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { min-height: 100%; }
+
+    body {
+      margin: 0;
+      overflow-x: hidden;
+      color: var(--paper);
+      background: var(--ink);
+      font-family: "Courier New", Courier, monospace;
+      image-rendering: pixelated;
+    }
+
+    button, a { font: inherit; }
+
+    .world {
+      position: relative;
+      isolation: isolate;
+      min-height: 100svh;
+      overflow: hidden;
+      background:
+        linear-gradient(to bottom, transparent 0 67%, rgba(19, 18, 48, .44) 67% 100%),
+        linear-gradient(to bottom, #12142f 0%, #302f63 42%, #746b9b 72%, #d7b98b 100%);
+    }
+
+    .world::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 20;
+      pointer-events: none;
+      opacity: .12;
+      background: repeating-linear-gradient(to bottom, transparent 0 3px, #130f2e 4px);
+      mix-blend-mode: multiply;
+    }
+
+    .world::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 19;
+      pointer-events: none;
+      box-shadow: inset 0 0 140px 24px rgba(8, 7, 25, .72);
+    }
+
+    .stars, .stars::before, .stars::after {
+      position: absolute;
+      inset: 0;
+      content: "";
+      background-image:
+        radial-gradient(circle, #fff6d3 0 1px, transparent 1.5px),
+        radial-gradient(circle, #f7d787 0 1px, transparent 1.5px);
+      background-position: 9vw 10vh, 44vw 17vh;
+      background-size: 29vw 23vh, 37vw 31vh;
+      opacity: .7;
+    }
+
+    .stars::before { transform: translate(13vw, 6vh); opacity: .45; }
+    .stars::after { transform: translate(-7vw, 14vh); opacity: .3; }
+
+    .moon {
+      position: absolute;
+      top: 7vh;
+      right: 10vw;
+      width: clamp(58px, 7vw, 110px);
+      aspect-ratio: 1;
+      border: 5px solid #d6a855;
+      background: #ffe9a1;
+      box-shadow: 0 0 0 5px #533d60, 0 0 45px 12px rgba(255, 217, 133, .24);
+      clip-path: polygon(16% 0, 84% 0, 84% 8%, 100% 8%, 100% 84%, 84% 84%, 84% 100%, 16% 100%, 16% 92%, 0 92%, 0 16%, 16% 16%);
+    }
+
+    .moon::before,
+    .moon::after {
+      content: "";
+      position: absolute;
+      background: #e4be70;
+      opacity: .7;
+    }
+
+    .moon::before { width: 18%; height: 13%; left: 24%; top: 24%; }
+    .moon::after { width: 12%; height: 18%; right: 20%; bottom: 22%; }
+
+    .cloud {
+      position: absolute;
+      z-index: 3;
+      width: clamp(200px, 28vw, 500px);
+      height: 90px;
+      color: rgba(212, 207, 238, .72);
+      background: currentColor;
+      box-shadow:
+        38px -28px 0 -8px currentColor,
+        82px -50px 0 -16px currentColor,
+        130px -24px 0 -4px currentColor,
+        174px -44px 0 -18px currentColor,
+        218px -17px 0 0 currentColor;
+      clip-path: polygon(0 46%, 8% 46%, 8% 28%, 18% 28%, 18% 14%, 30% 14%, 30% 25%, 45% 25%, 45% 9%, 59% 9%, 59% 28%, 74% 28%, 74% 42%, 100% 42%, 100% 72%, 89% 72%, 89% 84%, 20% 84%, 20% 73%, 0 73%);
+      filter: drop-shadow(0 8px 0 rgba(47, 39, 82, .28));
+      animation: drift 38s linear infinite;
+    }
+
+    .cloud-a { top: 19vh; left: -34vw; }
+    .cloud-b { top: 43vh; left: -42vw; transform: scale(.72); opacity: .64; animation-duration: 51s; animation-delay: -19s; }
+    .cloud-c { top: 8vh; left: -50vw; transform: scale(.46); opacity: .38; animation-duration: 62s; animation-delay: -35s; }
+
+    @keyframes drift { to { translate: 154vw 0; } }
+
+    .mountains {
+      position: absolute;
+      z-index: 2;
+      inset: auto 0 16vh;
+      height: 42vh;
+      background: #37345f;
+      clip-path: polygon(0 68%, 9% 47%, 16% 62%, 25% 28%, 35% 61%, 47% 41%, 57% 67%, 69% 25%, 78% 57%, 88% 38%, 100% 68%, 100% 100%, 0 100%);
+      filter: drop-shadow(0 -6px 0 #82739a);
+    }
+
+    .mountains::after {
+      content: "";
+      position: absolute;
+      inset: 35% 0 0;
+      background: #282747;
+      clip-path: polygon(0 72%, 11% 45%, 19% 64%, 31% 37%, 42% 68%, 54% 51%, 67% 75%, 79% 42%, 89% 67%, 100% 48%, 100% 100%, 0 100%);
+    }
+
+    .ground {
+      position: absolute;
+      z-index: 5;
+      inset: auto 0 0;
+      height: 24vh;
+      min-height: 150px;
+      border-top: 8px solid #24213e;
+      background:
+        linear-gradient(90deg, transparent 0 49%, rgba(29, 29, 50, .22) 50% 51%, transparent 52%) 0 0 / 40px 40px,
+        linear-gradient(#4d4663 0 48%, #403b55 49% 100%);
+    }
+
+    .ground::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(90deg, transparent 0 72px, rgba(25, 23, 44, .28) 72px 76px);
+      clip-path: polygon(0 42%, 7% 42%, 7% 26%, 14% 26%, 14% 48%, 24% 48%, 24% 32%, 38% 32%, 38% 50%, 51% 50%, 51% 28%, 60% 28%, 60% 45%, 71% 45%, 71% 34%, 82% 34%, 82% 52%, 92% 52%, 92% 29%, 100% 29%, 100% 100%, 0 100%);
+    }
+
+    .tower {
+      position: absolute;
+      z-index: 6;
+      right: clamp(4vw, 9vw, 150px);
+      bottom: 14vh;
+      width: clamp(150px, 20vw, 300px);
+      height: clamp(260px, 46vw, 500px);
+      background:
+        linear-gradient(90deg, transparent 44%, rgba(255,255,255,.06) 45% 55%, transparent 56%),
+        repeating-linear-gradient(0deg, #3f3a59 0 23px, #27253e 24px 28px);
+      border: 8px solid #211f38;
+      box-shadow: inset 8px 0 #57506e, 13px 13px 0 rgba(20, 18, 37, .5);
+      clip-path: polygon(14% 7%, 25% 7%, 25% 0, 39% 0, 39% 7%, 61% 7%, 61% 0, 75% 0, 75% 7%, 86% 7%, 86% 17%, 100% 17%, 100% 100%, 0 100%, 0 17%, 14% 17%);
+    }
+
+    .tower::before {
+      content: "";
+      position: absolute;
+      width: 42%;
+      aspect-ratio: .72;
+      left: 29%;
+      top: 28%;
+      background: #75dfce;
+      border: 7px solid #201e37;
+      box-shadow: inset 0 0 0 8px #3b7780, 0 0 24px rgba(105, 232, 218, .32);
+      clip-path: polygon(20% 0, 80% 0, 100% 20%, 100% 100%, 0 100%, 0 20%);
+    }
+
+    .tower::after {
+      content: "";
+      position: absolute;
+      width: 38%;
+      height: 32%;
+      left: 31%;
+      bottom: -4%;
+      background: #17162a;
+      border: 7px solid #28243d;
+      border-radius: 50% 50% 0 0;
+      box-shadow: inset 0 0 0 7px #372f49;
+    }
+
+    .chimney {
+      position: absolute;
+      z-index: 7;
+      right: clamp(8vw, 15vw, 240px);
+      bottom: calc(14vh + min(46vw, 500px) - 12px);
+      width: 34px;
+      height: 60px;
+      border: 6px solid #211f38;
+      background: #4f4867;
+    }
+
+    .smoke {
+      position: absolute;
+      z-index: 4;
+      right: clamp(9vw, 15vw, 240px);
+      bottom: calc(14vh + min(46vw, 500px) + 52px);
+      width: 28px;
+      height: 28px;
+      background: rgba(190, 185, 218, .55);
+      box-shadow: -18px -24px 0 7px rgba(190, 185, 218, .47), 8px -51px 0 15px rgba(190, 185, 218, .36), -15px -86px 0 21px rgba(190, 185, 218, .2);
+      animation: breathe 3.8s ease-in-out infinite;
+    }
+
+    @keyframes breathe { 50% { transform: translateY(-8px) scale(1.08); opacity: .66; } }
+
+    .bench {
+      position: absolute;
+      z-index: 8;
+      left: 5vw;
+      bottom: 8vh;
+      width: clamp(220px, 34vw, 500px);
+      height: 24px;
+      border: 7px solid #211d32;
+      background: #89563e;
+      box-shadow: 0 13px #503348, 24px 70px 0 -7px #30243a, calc(100% - 35px) 70px 0 -7px #30243a;
+    }
+
+    .flask {
+      position: absolute;
+      bottom: 24px;
+      width: 48px;
+      height: 68px;
+      border: 6px solid #24213c;
+      background: linear-gradient(to top, var(--liquid) 0 45%, rgba(194, 255, 238, .28) 46% 100%);
+      clip-path: polygon(35% 0, 65% 0, 65% 32%, 92% 74%, 92% 100%, 8% 100%, 8% 74%, 35% 32%);
+      filter: drop-shadow(0 0 9px color-mix(in srgb, var(--liquid) 58%, transparent));
+    }
+
+    .flask::after {
+      content: "";
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      left: 15px;
+      bottom: 12px;
+      background: rgba(255,255,255,.72);
+      box-shadow: 10px -15px 0 rgba(255,255,255,.42);
+      animation: bubble 1.8s steps(4) infinite;
+    }
+
+    .flask-a { --liquid: var(--acid); left: 12%; }
+    .flask-b { --liquid: var(--rose); left: 34%; transform: scale(.75); transform-origin: bottom; }
+    .flask-c { --liquid: var(--cyan); left: 56%; transform: scale(1.15); transform-origin: bottom; }
+
+    @keyframes bubble { to { translate: 0 -24px; opacity: 0; } }
+
+    .sign {
+      position: absolute;
+      z-index: 12;
+      top: clamp(34px, 7vh, 85px);
+      left: 50%;
+      width: min(730px, calc(100% - 40px));
+      translate: -50% 0;
+      text-align: center;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin: 0 0 16px;
+      padding: 8px 12px 7px;
+      color: #d8d1ef;
+      border: 3px solid #68618d;
+      background: rgba(27, 25, 58, .78);
+      box-shadow: 4px 4px 0 #17142e;
+      font-size: clamp(10px, 1.15vw, 14px);
+      font-weight: 700;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      color: #ffe9a1;
+      font-size: clamp(46px, 8.7vw, 118px);
+      font-weight: 900;
+      line-height: .78;
+      letter-spacing: -.09em;
+      text-shadow:
+        0 5px 0 #da934b,
+        0 10px 0 #813f43,
+        5px 15px 0 #17142e,
+        -4px 0 0 #362447,
+        4px 0 0 #362447;
+    }
+
+    h1 span {
+      display: block;
+      margin-top: .24em;
+      color: #f7cb67;
+      font-size: .64em;
+      letter-spacing: .18em;
+      text-shadow: 0 4px #b36e3f, 0 8px #5b3442, 4px 12px #17142e;
+    }
+
+    .lead {
+      max-width: 560px;
+      margin: 28px auto 22px;
+      color: #f2e8d0;
+      font-size: clamp(13px, 1.55vw, 18px);
+      font-weight: 700;
+      line-height: 1.7;
+      letter-spacing: .08em;
+      text-shadow: 3px 3px 0 #211d3b;
+    }
+
+    .cta {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      min-height: 52px;
+      padding: 12px 20px;
+      color: #332142;
+      border: 4px solid #36233d;
+      border-radius: 0;
+      background: var(--gold);
+      box-shadow: 0 6px 0 var(--gold-dark), 6px 11px 0 rgba(22, 18, 44, .64);
+      font-weight: 900;
+      letter-spacing: .1em;
+      text-decoration: none;
+      text-transform: uppercase;
+      cursor: not-allowed;
+    }
+
+    .cta::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      background: var(--acid);
+      box-shadow: 0 0 0 4px #5b8b55;
+      animation: pulse 1.4s steps(2) infinite;
+    }
+
+    @keyframes pulse { 50% { opacity: .35; } }
+
+    .micro {
+      margin: 16px 0 0;
+      color: #c9c1db;
+      font-size: 10px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+
+    .rune {
+      position: absolute;
+      z-index: 4;
+      width: 56px;
+      aspect-ratio: 1;
+      border: 4px solid rgba(255, 222, 139, .38);
+      rotate: 45deg;
+      animation: orbit 8s steps(24) infinite;
+    }
+
+    .rune::after {
+      content: "+";
+      position: absolute;
+      inset: 7px;
+      display: grid;
+      place-items: center;
+      border: 3px solid rgba(255, 222, 139, .3);
+      color: rgba(255, 235, 170, .65);
+      font-size: 26px;
+      rotate: -45deg;
+    }
+
+    .rune-a { left: 7vw; top: 35vh; }
+    .rune-b { right: 4vw; top: 48vh; scale: .62; animation-direction: reverse; }
+
+    @keyframes orbit { to { rotate: 405deg; } }
+
+    .brand {
+      position: absolute;
+      z-index: 15;
+      bottom: 18px;
+      left: 20px;
+      margin: 0;
+      color: rgba(255, 242, 204, .72);
+      font-size: 10px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 720px) {
+      .sign { top: 8vh; }
+      .lead { max-width: 86%; margin-top: 25px; }
+      .tower { right: -4vw; bottom: 13vh; opacity: .9; }
+      .chimney, .smoke { right: 9vw; }
+      .bench { left: -30px; bottom: 8vh; scale: .78; transform-origin: left bottom; }
+      .rune-a { top: 48vh; }
+      .mountains { bottom: 14vh; }
+      .ground { height: 20vh; }
+    }
+
+    @media (max-height: 690px) and (min-width: 721px) {
+      .sign { top: 4vh; }
+      h1 { font-size: clamp(44px, 8vh, 74px); }
+      .lead { margin: 20px auto 15px; }
+      .tower { opacity: .78; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; }
+      .cloud-a { left: 7vw; }
+      .cloud-b { left: 58vw; }
+      .cloud-c { left: 38vw; }
+    }
+  </style>
+</head>
+<body>
+  <main class="world">
+    <div class="stars" aria-hidden="true"></div>
+    <div class="moon" aria-hidden="true"></div>
+    <div class="cloud cloud-a" aria-hidden="true"></div>
+    <div class="cloud cloud-b" aria-hidden="true"></div>
+    <div class="cloud cloud-c" aria-hidden="true"></div>
+    <div class="mountains" aria-hidden="true"></div>
+    <div class="rune rune-a" aria-hidden="true"></div>
+    <div class="rune rune-b" aria-hidden="true"></div>
+
+    <section class="sign" aria-labelledby="title">
+      <p class="eyebrow">A strange experiment is underway</p>
+      <h1 id="title">ALCHEMIST<span>LAB</span></h1>
+      <p class="lead">Gather close, curious minds. We are brewing a new world from rare elements, old magic, and a dangerous amount of imagination.</p>
+      <button class="cta" type="button" disabled>Waitlist brewing</button>
+      <p class="micro">The gates open soon · experiment no. 001</p>
+    </section>
+
+    <div class="smoke" aria-hidden="true"></div>
+    <div class="chimney" aria-hidden="true"></div>
+    <div class="tower" aria-hidden="true"></div>
+    <div class="ground" aria-hidden="true"></div>
+    <div class="bench" aria-hidden="true">
+      <i class="flask flask-a"></i>
+      <i class="flask flask-b"></i>
+      <i class="flask flask-c"></i>
+    </div>
+
+    <p class="brand">© 2026 Alchemist Lab</p>
+  </main>
+</body>
+</html>
