@@ -6,7 +6,8 @@
   <meta name="theme-color" content="#090807">
   <title>Arcana Lab</title>
   <style>
-    *{box-sizing:border-box}
+    :root{--cursor:url("cursor.svg") 2 2,default;--pointer:url("pointer.svg") 8 2,pointer}
+    *{box-sizing:border-box;cursor:var(--cursor)}
     html,body,main{width:100%;height:100%;margin:0}
     body{min-width:320px;background:#090807;user-select:none;-webkit-user-select:none}
     main{position:relative;display:grid;place-items:center;overflow:hidden}
@@ -14,6 +15,7 @@
     .background{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;image-rendering:pixelated}
     .box{position:relative;width:min(320px,70vw);image-rendering:pixelated}
     .links{position:absolute;bottom:24px;left:clamp(20px,4vw,56px);display:flex;align-items:center}
+    a,a *{cursor:var(--pointer);-webkit-tap-highlight-color:transparent}
     .links a{width:88px;height:88px}
     .links img{width:100%;height:100%;object-fit:contain;image-rendering:pixelated}
     .links a:focus-visible{outline:2px solid white;outline-offset:4px}
@@ -26,7 +28,7 @@
     <img class="box" src="mid-box.png" alt="" draggable="false">
     <nav class="links" aria-label="External links">
       <a href="https://x.com/ArchemystLab" aria-label="Archemyst Lab on X"><img src="x-logo.png" alt="" draggable="false"></a>
-      <a href="docs.html" aria-label="Docs"><img src="docs-logo.png" alt="" draggable="false"></a>
+      <a href="/docs" aria-label="Docs"><img src="docs-logo.png" alt="" draggable="false"></a>
     </nav>
     <img class="trademark" src="archemyst-tm.png" alt="Archemyst™" draggable="false">
   </main>
