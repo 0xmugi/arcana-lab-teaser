@@ -3,40 +3,104 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0d0c0a">
-  <meta name="description" content="Alchemist Lab documentation.">
-  <title>Docs · Alchemist Lab</title>
+  <meta name="theme-color" content="#090807">
+  <meta name="description" content="Archemyst Lab project documentation and official links.">
+  <title>Docs // Archemyst Lab</title>
   <style>
-    :root{color-scheme:dark;--bg:#0d0c0a;--panel:#15130f;--line:#302b22;--text:#e8dfcf;--muted:#9c9383;--gold:#d99b3f}
-    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.75 Inter,ui-sans-serif,system-ui,sans-serif}a{color:inherit}.top{position:sticky;top:0;z-index:2;display:flex;height:64px;align-items:center;gap:12px;padding:0 24px;border-bottom:1px solid var(--line);background:#0d0c0af2;backdrop-filter:blur(12px)}.logo{width:38px;height:38px;object-fit:contain;image-rendering:pixelated}.brand{text-decoration:none;font-weight:750;letter-spacing:.02em}.back{margin-left:auto;color:var(--muted);text-decoration:none}.back:hover,.nav a:hover{color:var(--text)}.layout{display:grid;grid-template-columns:260px minmax(0,760px);gap:64px;max-width:1180px;margin:auto;padding:40px 24px 96px}.nav{position:sticky;top:104px;align-self:start;display:grid;gap:3px}.nav strong{margin:18px 12px 7px;color:#716a5f;font-size:11px;letter-spacing:.12em;text-transform:uppercase}.nav a{padding:5px 12px;border-left:1px solid var(--line);color:var(--muted);text-decoration:none}.nav a:first-of-type{border-left-color:var(--gold);color:var(--text)}main{min-width:0}h1,h2{line-height:1.2;letter-spacing:-.03em}h1{margin:0 0 14px;font-size:44px}h2{margin:64px 0 14px;padding-top:16px;border-top:1px solid var(--line);font-size:27px}.lede{color:var(--muted);font-size:18px}.tag{display:inline-block;margin-bottom:18px;padding:3px 9px;border:1px solid #66491f;border-radius:999px;color:#efb85f;font-size:12px}.callout{margin:24px 0;padding:15px 18px;border-left:3px solid var(--gold);background:var(--panel);color:#cfc5b4}.steps{counter-reset:step;display:grid;gap:12px;padding:0;list-style:none}.steps li{counter-increment:step;padding:14px 16px;border:1px solid var(--line);background:var(--panel)}.steps li:before{content:counter(step);display:inline-grid;width:24px;height:24px;margin-right:11px;place-items:center;border-radius:50%;background:#3b2a13;color:#ffc66d;font-size:12px;font-weight:700}code{padding:2px 5px;border:1px solid var(--line);border-radius:4px;background:#171510;color:#f0c77f;font:13px ui-monospace,SFMono-Regular,Consolas,monospace}@media(max-width:760px){.layout{display:block;padding-top:24px}.nav{position:static;margin-bottom:42px;padding-bottom:20px;border-bottom:1px solid var(--line)}h1{font-size:36px}h2{margin-top:48px}.top{padding:0 18px}}
+    :root{color-scheme:dark;--ink:#090807;--panel:#11100de8;--panel-2:#191712e8;--line:#74664a;--line-dim:#3c3529;--text:#eee7d7;--muted:#a69d89;--signal:#d9b875;--alert:#b9674d}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:96px}
+    body{min-width:320px;margin:0;background:var(--ink);color:var(--text);font:14px/1.7 ui-monospace,"Cascadia Mono","Segoe UI Mono",Consolas,monospace;letter-spacing:.02em}
+    body::before{content:"";position:fixed;inset:0;z-index:-2;background:url("art.gif") center/cover no-repeat;image-rendering:pixelated}
+    body::after{content:"";position:fixed;inset:0;z-index:-1;background:linear-gradient(90deg,#090807f5 0 22%,#090807d9 55%,#090807ed),repeating-linear-gradient(0deg,transparent 0 3px,#0002 4px);pointer-events:none}
+    a{color:inherit}.skip{position:fixed;top:8px;left:8px;z-index:20;padding:8px 12px;background:var(--text);color:var(--ink);transform:translateY(-150%)}.skip:focus{transform:none}
+    header{position:sticky;top:0;z-index:10;display:flex;height:72px;align-items:center;gap:14px;padding:0 clamp(18px,4vw,56px);border-bottom:1px solid var(--line-dim);background:#090807e8;backdrop-filter:blur(10px)}
+    header::after{content:"";position:absolute;bottom:-1px;left:0;width:28%;height:1px;background:var(--signal);box-shadow:0 0 12px var(--signal)}
+    .mark{width:42px;height:42px;object-fit:contain;image-rendering:pixelated;pointer-events:none;-webkit-user-drag:none}.crumb{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:12px;letter-spacing:.14em;text-transform:uppercase}.crumb a{color:var(--text);font-weight:700;text-decoration:none}.crumb span{color:var(--line)}
+    .header-links{display:flex;gap:8px;margin-left:auto}.button{display:inline-flex;min-height:38px;align-items:center;justify-content:center;padding:7px 12px;border:1px solid var(--line-dim);background:#12100d;color:var(--muted);text-decoration:none;text-transform:uppercase;letter-spacing:.1em;font-size:11px}.button:hover,.button:focus-visible{border-color:var(--signal);color:var(--text);background:#1b1710;outline:none;box-shadow:3px 3px 0 #000}
+    .layout{display:grid;grid-template-columns:220px minmax(0,780px);gap:clamp(32px,6vw,88px);width:min(1180px,100%);margin:0 auto;padding:48px clamp(18px,4vw,56px) 112px}
+    .side{position:sticky;top:112px;align-self:start}.side-label,.eyebrow{color:var(--signal);font-size:10px;font-weight:700;letter-spacing:.22em;text-transform:uppercase}.side-label{display:flex;align-items:center;gap:8px;margin:0 0 15px}.side-label::before{content:"";width:7px;height:7px;background:var(--signal);box-shadow:0 0 8px var(--signal);animation:pulse 2s steps(2,end) infinite}.side nav{display:grid;border-top:1px solid var(--line-dim)}.side a{display:flex;gap:12px;padding:10px 4px;border-bottom:1px solid var(--line-dim);color:var(--muted);text-decoration:none}.side a::before{content:attr(data-index);color:#635b4d}.side a:hover,.side a:focus-visible{padding-left:10px;color:var(--text);background:#d9b8750b;outline:none}.side-meta{margin-top:28px;color:#716a5c;font-size:10px;line-height:1.8;text-transform:uppercase;letter-spacing:.08em}
+    main{min-width:0}.hero{position:relative;margin-bottom:56px;padding:clamp(24px,5vw,48px);border:1px solid var(--line);background:linear-gradient(135deg,#1b1812ed,#0d0c09f2);clip-path:polygon(0 10px,10px 10px,10px 0,calc(100% - 10px) 0,calc(100% - 10px) 10px,100% 10px,100% calc(100% - 10px),calc(100% - 10px) calc(100% - 10px),calc(100% - 10px) 100%,10px 100%,10px calc(100% - 10px),0 calc(100% - 10px))}.hero::before{content:"ARCHIVE // 001";position:absolute;top:12px;right:15px;color:#716753;font-size:9px;letter-spacing:.16em}.hero::after{content:"";position:absolute;left:0;bottom:0;width:42%;height:2px;background:var(--signal);animation:load 1.2s steps(8,end) both}
+    .eyebrow{margin-bottom:20px}h1,h2,h3{font-weight:700;line-height:1.15;text-transform:uppercase}h1{max-width:620px;margin:0;font-size:clamp(38px,8vw,76px);letter-spacing:-.06em;text-shadow:3px 0 0 #6f3d31,-3px 0 0 #374945;animation:resolve .8s steps(2,end) both}h1 span{display:block;color:var(--signal);font-size:.25em;letter-spacing:.18em;margin-top:15px;text-shadow:none}.lede{max-width:610px;margin:28px 0 0;color:var(--muted);font-size:clamp(15px,2vw,18px)}
+    section{margin-top:64px}h2{display:flex;align-items:center;gap:12px;margin:0 0 24px;font-size:clamp(20px,3vw,28px);letter-spacing:-.02em}h2::before{content:"#";color:var(--signal)}p{margin:0 0 18px}.muted{color:var(--muted)}
+    .notice{display:grid;grid-template-columns:auto 1fr;gap:14px;margin:28px 0;padding:18px;border:1px solid var(--line-dim);border-left:3px solid var(--signal);background:var(--panel)}.notice strong{color:var(--signal);font-size:10px;letter-spacing:.15em}.notice p{margin:0;color:var(--muted)}
+    .cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.card{position:relative;min-height:164px;padding:22px;border:1px solid var(--line-dim);background:var(--panel);text-decoration:none}.card:hover,.card:focus-visible{border-color:var(--signal);background:var(--panel-2);outline:none;transform:translate(-2px,-2px);box-shadow:4px 4px 0 #000}.card small{color:var(--signal);letter-spacing:.15em}.card h3{margin:25px 0 8px;font-size:15px;letter-spacing:.08em}.card p{margin:0;color:var(--muted);font-size:12px}.card::after{content:"↗";position:absolute;top:18px;right:20px;color:var(--muted)}
+    .status{border:1px solid var(--line-dim);background:var(--panel)}.status-row{display:grid;grid-template-columns:minmax(120px,1fr) 2fr;gap:16px;padding:14px 18px;border-bottom:1px solid var(--line-dim)}.status-row:last-child{border:0}.status-row span:first-child{color:var(--muted);text-transform:uppercase;font-size:11px;letter-spacing:.1em}.value{display:flex;align-items:center;gap:9px}.value::before{content:"";width:6px;height:6px;background:var(--alert)}.value.live::before{background:var(--signal);box-shadow:0 0 7px var(--signal)}
+    .rules{margin:0;padding:0;list-style:none;border-top:1px solid var(--line-dim)}.rules li{position:relative;padding:15px 14px 15px 38px;border-bottom:1px solid var(--line-dim);color:var(--muted)}.rules li::before{content:"+";position:absolute;left:14px;color:var(--signal)}code{padding:2px 5px;background:#211d16;color:var(--signal)}
+    footer{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-top:80px;padding-top:28px;border-top:1px solid var(--line-dim);color:#746c5d;font-size:10px;text-transform:uppercase;letter-spacing:.12em}.wordmark{width:min(250px,48%);opacity:.65;pointer-events:none;-webkit-user-drag:none}
+    @keyframes pulse{50%{opacity:.25}}@keyframes load{from{width:0}}@keyframes resolve{0%{opacity:0;transform:translateY(8px);filter:blur(3px)}60%{text-shadow:8px 0 #6f3d31,-8px 0 #374945}100%{opacity:1;transform:none;filter:none}}
+    @media (max-width:760px){header{height:64px}.crumb span,.header-links .x-link{display:none}.layout{display:block;padding-top:28px}.side{position:static;margin-bottom:32px}.side-label,.side-meta{display:none}.side nav{grid-template-columns:repeat(4,1fr);overflow-x:auto;border:1px solid var(--line-dim)}.side a{justify-content:center;white-space:nowrap;border:0;border-right:1px solid var(--line-dim);font-size:11px}.side a::before{display:none}.hero{margin-bottom:48px}.cards{grid-template-columns:1fr}}
+    @media (max-width:480px){.side nav{grid-template-columns:repeat(4,max-content);justify-content:stretch}.side a{padding-inline:14px}.status-row{grid-template-columns:1fr;gap:5px}footer{align-items:start;flex-direction:column-reverse}.wordmark{width:230px;max-width:80%}}
+    @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
+    /* ponytail: system monospace is the no-download pixel-font ceiling; swap the stack for a licensed local WOFF2 when brand typography is finalized. */
   </style>
 </head>
 <body>
-  <header class="top"><img class="logo" src="docs-logo.png" alt=""><a class="brand" href="index.html">Alchemist Lab</a><span>/ Docs</span><a class="back" href="index.html">← Back to lab</a></header>
+  <a class="skip" href="#content">Skip to documentation</a>
+  <header>
+    <img class="mark" src="docs-logo.png" alt="" draggable="false">
+    <div class="crumb"><a href="index.html">Archemyst Lab</a><span>//</span>Documentation</div>
+    <nav class="header-links" aria-label="Project links">
+      <a class="button x-link" href="https://x.com/ArchemystLab" target="_blank" rel="noopener">Official X ↗</a>
+      <a class="button" href="index.html">Exit docs</a>
+    </nav>
+  </header>
+
   <div class="layout">
-    <nav class="nav" aria-label="Documentation"><strong>Introduction</strong><a href="#overview">Overview</a><a href="#access">Request access</a><strong>Protocol</strong><a href="#registry">Genesis registry</a><a href="#status">Current status</a></nav>
-    <main>
-      <span class="tag">Trial 001</span>
-      <h1 id="overview">Alchemist Lab</h1>
-      <p class="lede">An experimental onchain workshop preparing its first public trial.</p>
-      <div class="callout">The laboratory is pre-launch. No token, contract address, or mint is live.</div>
-      <p>Alchemist Lab is currently collecting early operator registrations for its genesis registry. Registration records an X handle and an EVM address on the visitor's device while the external registry is being prepared.</p>
+    <aside class="side">
+      <p class="side-label">Archive online</p>
+      <nav aria-label="Documentation sections">
+        <a data-index="01" href="#overview">Overview</a>
+        <a data-index="02" href="#channels">Channels</a>
+        <a data-index="03" href="#status">Status</a>
+        <a data-index="04" href="#safety">Safety</a>
+      </nav>
+      <p class="side-meta">File: ARC–001<br>Access: Public<br>Revision: 01</p>
+    </aside>
 
-      <h2 id="access">Request access</h2>
-      <ol class="steps">
-        <li>Open the <a href="index.html">laboratory landing page</a>.</li>
-        <li>Select <strong>Request clearance</strong>.</li>
-        <li>Enter your X handle and a valid 42-character EVM address.</li>
-      </ol>
-      <p>Use an address you control. Never enter a seed phrase or private key.</p>
+    <main id="content">
+      <div class="hero">
+        <div class="eyebrow">Project documentation</div>
+        <h1>Archemyst<span>Laboratory archive</span></h1>
+        <p class="lede">The canonical reference for the Archemyst Lab project, current release state, and verified public channels.</p>
+      </div>
 
-      <h2 id="registry">Genesis registry</h2>
-      <p>The current teaser stores submissions in browser <code>localStorage</code>. It does not send data to a server or guarantee allowlist access.</p>
-      <!-- ponytail: local-only registration is the teaser ceiling; replace with an audited registry API when applications open. -->
-      <ul><li>X handles accept up to 15 letters, numbers, or underscores.</li><li>EVM addresses must begin with <code>0x</code> followed by 40 hexadecimal characters.</li><li>Signing a message is not required during this trial.</li></ul>
+      <section id="overview">
+        <h2>Overview</h2>
+        <p>Archemyst Lab is currently presented through its public project gateway. The experience is in an early release state while protocol details are being prepared.</p>
+        <div class="notice"><strong>NOTICE</strong><p>No network, token, contract address, mint, or access flow has been publicly announced on this website.</p></div>
+        <p class="muted">Future technical documentation will be published here only when implementation details are ready for public verification.</p>
+      </section>
 
-      <h2 id="status">Current status</h2>
-      <p><strong>Reactor:</strong> stable<br><strong>Archive:</strong> AL–001<br><strong>Network:</strong> not announced<br><strong>Contracts:</strong> not deployed</p>
+      <section id="channels">
+        <h2>Official channels</h2>
+        <div class="cards">
+          <a class="card" href="index.html"><small>LOCAL // 01</small><h3>Project gateway</h3><p>Return to the primary Archemyst Lab experience.</p></a>
+          <a class="card" href="https://x.com/ArchemystLab" target="_blank" rel="noopener"><small>EXTERNAL // 02</small><h3>Archemyst on X</h3><p>Follow the verified project account for public updates.</p></a>
+        </div>
+      </section>
+
+      <section id="status">
+        <h2>Release status</h2>
+        <div class="status" role="list" aria-label="Project release status">
+          <div class="status-row" role="listitem"><span>Project gateway</span><span class="value live">Online</span></div>
+          <div class="status-row" role="listitem"><span>Documentation</span><span class="value live">Public</span></div>
+          <div class="status-row" role="listitem"><span>Network</span><span class="value">Not announced</span></div>
+          <div class="status-row" role="listitem"><span>Contracts</span><span class="value">Not published</span></div>
+        </div>
+      </section>
+
+      <section id="safety">
+        <h2>Safety protocol</h2>
+        <ul class="rules">
+          <li>Use only links published on this website or the official <code>@ArchemystLab</code> account.</li>
+          <li>Never share a seed phrase, private key, or wallet recovery phrase.</li>
+          <li>Verify network and contract information against this documentation before interacting.</li>
+          <li>Treat unannounced tokens, mints, and direct messages as unaffiliated.</li>
+        </ul>
+      </section>
+
+      <footer><span>Archemyst Lab // Public archive</span><img class="wordmark" src="archemyst-tm.png" alt="Archemyst™" draggable="false"></footer>
     </main>
   </div>
 </body>
