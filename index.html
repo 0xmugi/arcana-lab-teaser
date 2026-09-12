@@ -4,102 +4,24 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#090807">
-  <meta name="description" content="Alchemist Lab — an experimental onchain workshop opening soon.">
-  <title>Alchemist Lab</title>
+  <title>Arcana Lab</title>
   <style>
-    :root{color-scheme:dark;--paper:#f4e7c8;--dim:#b8a98a;--gold:#d99b3f;--panel:#17130ee8}
     *{box-sizing:border-box}
-    html,body{height:100%}
-    body{margin:0;min-width:320px;overflow:hidden;background:#090807;color:var(--paper);font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
-    button,input{font:inherit}
-    button,a{color:inherit}
-    .world{position:relative;display:grid;min-height:100svh;place-items:center;isolation:isolate;overflow:hidden}
-    .art,.veil{position:absolute;inset:0;width:100%;height:100%}
-    .art{z-index:-3;object-fit:cover;image-rendering:pixelated}
-    .veil{z-index:-2;background:linear-gradient(#09070466,#0907040d 26% 62%,#090704a8),radial-gradient(circle at 50% 48%,transparent 18%,#09070452 74%,#090704b8)}
-    .scan{position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.12;background:repeating-linear-gradient(0deg,transparent 0 3px,#000 3px 4px);mix-blend-mode:multiply}
-    .brand{position:absolute;top:clamp(22px,4vw,48px);left:clamp(22px,4vw,56px);display:flex;align-items:center;gap:11px;font-size:10px;font-weight:900;letter-spacing:.2em;text-transform:uppercase;text-shadow:2px 2px #000}
-    .brand i{width:14px;height:14px;border:2px solid var(--gold);rotate:45deg;box-shadow:inset 0 0 0 3px #17130e,4px 4px #000}
-    .hero{width:min(680px,calc(100% - 36px));padding:32px 24px;text-align:center}
-    .eyebrow{margin:0 0 19px;color:#ffd071;font-size:10px;font-weight:900;letter-spacing:.32em;text-transform:uppercase;text-shadow:2px 2px #000}
-    .actions{display:grid;width:min(320px,100%);aspect-ratio:160/98;margin:8px auto -35px;place-items:start center;background:url('mid-box.png') center/contain no-repeat;image-rendering:pixelated}
-    .actions .cta{margin-top:32px}
-    h1{margin:0;color:#fff0ce;font-family:"Courier New",ui-monospace,monospace;font-size:clamp(54px,8.5vw,116px);font-weight:900;line-height:.76;letter-spacing:-.09em;text-transform:uppercase;text-shadow:3px 0 #3b1f12,0 3px #3b1f12,3px 3px #3b1f12,6px 6px #090604}
-    h1 span{display:block;margin-top:.3em;color:#e5ad51;font-size:.5em;letter-spacing:.12em;text-shadow:2px 0 #3b1f12,0 2px #3b1f12,4px 4px #090604}
-    .lead{max-width:490px;margin:32px auto 0;color:#f0e4cc;font-size:clamp(13px,1.3vw,16px);font-weight:700;line-height:1.6;text-shadow:2px 2px #000}
-    .cta,.docs{border:0;background:#21160f;box-shadow:inset 0 0 0 2px #e0a854,inset 0 0 0 5px #0d0a07,0 6px #080604;text-decoration:none;text-transform:uppercase;clip-path:polygon(0 6px,6px 6px,6px 0,calc(100% - 6px) 0,calc(100% - 6px) 6px,100% 6px,100% calc(100% - 6px),calc(100% - 6px) calc(100% - 6px),calc(100% - 6px) 100%,6px 100%,6px calc(100% - 6px),0 calc(100% - 6px));cursor:pointer;transition:transform .1s,filter .1s}
-    .cta{min-width:205px;height:52px;margin-top:27px;padding:0 25px;color:#fff0ce;font-size:11px;font-weight:900;letter-spacing:.17em}
-    .cta:hover,.docs:hover{filter:brightness(1.28);transform:translateY(-2px)}
-    .cta:active,.docs:active{transform:translateY(3px)}
-    .cta:focus-visible,.docs:focus-visible,.close:focus-visible,input:focus-visible{outline:2px solid #fff2c8;outline-offset:4px}
-    .archive{position:absolute;bottom:26px;left:clamp(22px,4vw,56px);margin:0;color:var(--dim);font-size:8px;line-height:1.6;letter-spacing:.16em;text-transform:uppercase;text-shadow:0 2px 7px #000}
-    .archive b{color:var(--gold)}
-    .docs{position:absolute;right:clamp(22px,4vw,56px);bottom:25px;display:grid;width:88px;height:88px;place-items:center;background:url('docs-logo.png') center/contain no-repeat;box-shadow:none;clip-path:none;font-size:0;image-rendering:pixelated}
-    dialog{width:min(510px,calc(100% - 28px));padding:0;border:0;background:transparent;color:var(--paper)}
-    dialog::backdrop{background:#070504d9;backdrop-filter:blur(5px)}
-    dialog[open]{animation:show .2s ease-out}
-    .panel{position:relative;padding:42px clamp(24px,6vw,48px);border:1px solid #9f7948;background:linear-gradient(145deg,#2a2118f5,var(--panel));box-shadow:0 24px 80px #000,inset 0 0 0 4px #0d0a07}
-    .close{position:absolute;top:14px;right:14px;width:34px;height:34px;border:1px solid #7c6547;background:#17110d;color:#d4c4a6;font-size:20px;cursor:pointer}
-    .folio{margin:0 0 12px;color:var(--gold);font-size:9px;letter-spacing:.2em;text-transform:uppercase}
-    h2{margin:0;font-family:Georgia,serif;font-size:clamp(30px,6vw,42px);font-weight:400;line-height:1.05}
-    .modal-copy{margin:14px 0 24px;color:#bdb097;font-family:Georgia,serif;font-size:14px;line-height:1.55}
-    label{display:block;margin:0 0 7px;color:#c8b894;font-size:9px;font-weight:700;letter-spacing:.15em;text-transform:uppercase}
-    form label:not(:first-child){margin-top:14px}
-    input{width:100%;height:48px;padding:0 13px;border:1px solid #65553e;border-radius:0;background:#0c0907;color:#f4e7c8;font-size:14px}
-    input::placeholder{color:#6d6457}
-    .submit{width:100%;margin-top:16px}
-    .success{display:none;padding:30px 0;text-align:center}
-    .success[aria-hidden="false"]{display:block}
-    @keyframes show{from{opacity:0;transform:translateY(10px)}}
-    @media(max-width:600px){.art{object-position:54% center}.veil{background:linear-gradient(#09070485,#0907041f 25% 58%,#090704c7),radial-gradient(circle at 50% 45%,transparent,#0907048f 76%)}.hero{padding:20px 14px 86px}.brand{font-size:9px}h1{font-size:clamp(55px,19vw,91px)}.lead{max-width:330px;font-size:15px}.archive{bottom:23px;max-width:130px}.docs{right:20px;bottom:21px;width:98px}.panel{padding-top:48px}}
-    @media(max-height:660px) and (min-width:601px){.hero{transform:scale(.84)}.brand{top:20px}.archive{bottom:18px}.docs{bottom:17px}}
-    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+    html,body,main{width:100%;height:100%;margin:0}
+    body{min-width:320px;background:#090807}
+    main{position:relative;display:grid;place-items:center;overflow:hidden}
+    .background{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;image-rendering:pixelated}
+    .box{position:relative;width:min(320px,70vw);image-rendering:pixelated}
+    .docs{position:absolute;bottom:24px;left:clamp(20px,4vw,56px);width:88px;height:88px}
+    .docs img{width:100%;height:100%;object-fit:contain;image-rendering:pixelated}
+    .docs:focus-visible{outline:2px solid white;outline-offset:4px}
   </style>
 </head>
 <body>
-  <main class="world">
-    <img class="art" src="art.gif" alt="" fetchpriority="high">
-    <div class="veil"></div><div class="scan"></div>
-    <header class="brand"><i aria-hidden="true"></i>Alchemist Lab</header>
-    <section class="hero" aria-labelledby="title">
-      <p class="eyebrow">Sector VII · Trial 001</p>
-      <h1 id="title">Alchemist<span>Laboratory</span></h1>
-      <p class="lead">The apparatus is live. The first batch is nearly stable. Enter the genesis registry before the iron doors open.</p>
-      <div class="actions"><button class="cta" id="open-waitlist" type="button">Request clearance</button></div>
-    </section>
-    <p class="archive">Archive <b>AL–001</b><br>Reactor status: stable</p>
-    <a class="docs" href="docs.html" aria-label="Docs">Docs</a>
+  <main>
+    <img class="background" src="art.gif" alt="">
+    <img class="box" src="mid-box.png" alt="">
+    <a class="docs" href="docs.html" aria-label="Docs"><img src="docs-logo.png" alt=""></a>
   </main>
-
-  <dialog id="waitlist-modal" aria-labelledby="modal-title">
-    <div class="panel">
-      <button class="close" type="button" aria-label="Close registry">×</button>
-      <div id="form-view">
-        <p class="folio">Genesis registry · AL–07</p>
-        <h2 id="modal-title">Request laboratory clearance.</h2>
-        <p class="modal-copy">Leave your X handle and the EVM address you intend to use. One entry per operator.</p>
-        <form id="waitlist-form">
-          <label for="x-handle">X handle</label>
-          <input id="x-handle" name="xHandle" type="text" autocomplete="username" spellcheck="false" placeholder="@operator" pattern="@?[A-Za-z0-9_]{1,15}" title="Enter a valid X handle (up to 15 letters, numbers, or underscores)." required>
-          <label for="wallet">EVM address</label>
-          <input id="wallet" name="wallet" type="text" autocomplete="off" spellcheck="false" placeholder="0x0000..." pattern="0x[a-fA-F0-9]{40}" title="Enter a valid 42-character EVM wallet address." required>
-          <button class="cta submit" type="submit">Enter the registry</button>
-        </form>
-      </div>
-      <div class="success" id="success-view" aria-hidden="true" role="status">
-        <p class="folio">Dossier received</p>
-        <h2>Clearance pending.</h2>
-        <p class="modal-copy">Your X handle and address are in the local archive.</p>
-      </div>
-    </div>
-  </dialog>
-
-  <script>
-    const modal=document.querySelector('#waitlist-modal'),form=document.querySelector('#waitlist-form');
-    document.querySelector('#open-waitlist').onclick=()=>modal.showModal();
-    modal.querySelector('.close').onclick=()=>modal.close();
-    modal.onclick=e=>{if(e.target===modal)modal.close()};
-    form.onsubmit=e=>{e.preventDefault();if(!form.reportValidity())return;localStorage.setItem('alchemist-lab-entry',JSON.stringify(Object.fromEntries(new FormData(form))));document.querySelector('#form-view').hidden=true;document.querySelector('#success-view').setAttribute('aria-hidden','false')};
-  </script>
 </body>
 </html>
