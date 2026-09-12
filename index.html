@@ -8,20 +8,27 @@
   <style>
     *{box-sizing:border-box}
     html,body,main{width:100%;height:100%;margin:0}
-    body{min-width:320px;background:#090807}
+    body{min-width:320px;background:#090807;user-select:none;-webkit-user-select:none}
     main{position:relative;display:grid;place-items:center;overflow:hidden}
+    img{pointer-events:none;-webkit-user-drag:none}
     .background{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;image-rendering:pixelated}
     .box{position:relative;width:min(320px,70vw);image-rendering:pixelated}
-    .docs{position:absolute;bottom:24px;left:clamp(20px,4vw,56px);width:88px;height:88px}
-    .docs img{width:100%;height:100%;object-fit:contain;image-rendering:pixelated}
-    .docs:focus-visible{outline:2px solid white;outline-offset:4px}
+    .links{position:absolute;bottom:24px;left:clamp(20px,4vw,56px);display:flex;align-items:center}
+    .links a{width:88px;height:88px}
+    .links img{width:100%;height:100%;object-fit:contain;image-rendering:pixelated}
+    .links a:focus-visible{outline:2px solid white;outline-offset:4px}
+    .trademark{position:absolute;right:clamp(20px,4vw,56px);bottom:38px;width:min(286px,36vw)}
   </style>
 </head>
 <body>
   <main>
-    <img class="background" src="art.gif" alt="">
-    <img class="box" src="mid-box.png" alt="">
-    <a class="docs" href="docs.html" aria-label="Docs"><img src="docs-logo.png" alt=""></a>
+    <img class="background" src="art.gif" alt="" draggable="false">
+    <img class="box" src="mid-box.png" alt="" draggable="false">
+    <nav class="links" aria-label="External links">
+      <a href="https://x.com/ArchemystLab" aria-label="Archemyst Lab on X"><img src="x-logo.png" alt="" draggable="false"></a>
+      <a href="docs.html" aria-label="Docs"><img src="docs-logo.png" alt="" draggable="false"></a>
+    </nav>
+    <img class="trademark" src="archemyst-tm.png" alt="Archemyst™" draggable="false">
   </main>
 </body>
 </html>
