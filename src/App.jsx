@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 const X_URL = 'https://x.com/ArchemystLab'
 
 const IconLink = ({ href, label, src }) => (
@@ -6,41 +8,64 @@ const IconLink = ({ href, label, src }) => (
   </a>
 )
 
-// ponytail: entries land in localStorage only; swap for the submission endpoint when the backend exists.
-const submitEntry = (event) => {
-  event.preventDefault()
-  const form = event.currentTarget
-  if (!form.reportValidity()) return
-  localStorage.setItem('archemyst-entry', JSON.stringify({
-    address: form.address.value.trim(),
-    proof: form.proof.value.trim(),
-    at: new Date().toISOString(),
-  }))
-  form.reset()
+// Site-styled validation replaces the browser's native "Please fill out this field" bubbles.
+const validate = (form, opened) => {
+  const address = form.address.value.trim()
+  const proof = form.proof.value.trim()
+  if (!address) return 'Wallet address required'
+  if (!/^0x[a-fA-F0-9]{40}$/.test(address)) return 'Address must be 0x + 40 hex characters'
+  if (!opened) return 'Open the post on X first, then paste your link'
+  if (!proof) return 'Retweet or comment link required'
+  if (!/^https?:\/\/\S+$/.test(proof)) return 'Proof must be a full link starting with https://'
+  return null
 }
 
 function Landing() {
+  const [opened, setOpened] = useState(false)
+  const [note, setNote] = useState(null)
+
+  // ponytail: entries land in localStorage only; swap for the submission endpoint when the backend exists.
+  const submitEntry = (event) => {
+    event.preventDefault()
+    const form = event.currentTarget
+    const error = validate(form, opened)
+    if (error) return setNote({ tone: 'alert', text: error })
+    localStorage.setItem('archemyst-entry', JSON.stringify({
+      address: form.address.value.trim(),
+      proof: form.proof.value.trim(),
+      at: new Date().toISOString(),
+    }))
+    form.reset()
+    setNote({ tone: 'ok', text: 'Entry logged' })
+  }
+
   return (
     <main className="landing">
       <img className="background" src="/art.gif" alt="" draggable="false" />
-      <form className="mid" onSubmit={submitEntry}>
+      <form className="mid" onSubmit={submitEntry} noValidate>
         <img className="box" src="/mid-box.png" alt="" draggable="false" />
         <input
           className="slot slot-address" name="address" type="text"
-          spellCheck="false" autoComplete="off" required
-          pattern="0x[a-fA-F0-9]{40}" placeholder="0x…"
-          aria-label="Wallet address"
+          spellCheck="false" autoComplete="off"
+          placeholder="0x…" aria-label="Wallet address"
         />
         <input
           className="slot slot-proof" name="proof" type="url"
-          spellCheck="false" autoComplete="off" required
+          spellCheck="false" autoComplete="off"
           placeholder="x.com/…/status/…"
           aria-label="Retweet or comment link"
         />
-        <a className="slot slot-x" href={X_URL} target="_blank" rel="noopener noreferrer" aria-label="Open the post on X">
+        <a
+          className={`slot slot-x${opened ? ' is-open' : ''}`} href={X_URL}
+          target="_blank" rel="noopener noreferrer"
+          aria-label="Step 1 — open the post on X"
+          onClick={() => { setOpened(true); setNote(null) }}
+        >
           <img src="/x-logo.png" alt="" draggable="false" />
+          <span className="slot-x-hint">{opened ? 'opened' : 'click me'}</span>
         </a>
         <button className="slot slot-submit" type="submit" aria-label="Submit entry" />
+        <p className={`mid-note${note ? ` is-${note.tone}` : ''}`} role="status" aria-live="polite">{note?.text ?? ''}</p>
       </form>
       <nav className="landing-links" aria-label="Project links">
         <IconLink href={X_URL} label="Archemyst Lab on X" src="/x-logo.png" />
