@@ -14,9 +14,9 @@ const validate = (form, opened) => {
   const proof = form.proof.value.trim()
   if (!address) return 'Wallet address required'
   if (!/^0x[a-fA-F0-9]{40}$/.test(address)) return 'Address must be 0x + 40 hex characters'
-  if (!opened) return 'Open the post on X first, then paste your link'
   if (!proof) return 'Retweet or comment link required'
-  if (!/^https?:\/\/\S+$/.test(proof)) return 'Proof must be a full link starting with https://'
+  if (!/^https?:\/\/(x\.com|twitter\.com)\/\S+\/status\/\d+/.test(proof)) return 'Proof must be an x.com post link'
+  if (!opened) return 'Open the post on X first, then paste your link'
   return null
 }
 
