@@ -6,11 +6,42 @@ const IconLink = ({ href, label, src }) => (
   </a>
 )
 
+// ponytail: entries land in localStorage only; swap for the submission endpoint when the backend exists.
+const submitEntry = (event) => {
+  event.preventDefault()
+  const form = event.currentTarget
+  if (!form.reportValidity()) return
+  localStorage.setItem('archemyst-entry', JSON.stringify({
+    address: form.address.value.trim(),
+    proof: form.proof.value.trim(),
+    at: new Date().toISOString(),
+  }))
+  form.reset()
+}
+
 function Landing() {
   return (
     <main className="landing">
       <img className="background" src="/art.gif" alt="" draggable="false" />
-      <img className="box" src="/mid-box.png" alt="" draggable="false" />
+      <form className="mid" onSubmit={submitEntry}>
+        <img className="box" src="/mid-box.png" alt="" draggable="false" />
+        <input
+          className="slot slot-address" name="address" type="text"
+          spellCheck="false" autoComplete="off" required
+          pattern="0x[a-fA-F0-9]{40}" placeholder="0x…"
+          aria-label="Wallet address"
+        />
+        <input
+          className="slot slot-proof" name="proof" type="url"
+          spellCheck="false" autoComplete="off" required
+          placeholder="x.com/…/status/…"
+          aria-label="Retweet or comment link"
+        />
+        <a className="slot slot-x" href={X_URL} target="_blank" rel="noopener noreferrer" aria-label="Open the post on X">
+          <img src="/x-logo.png" alt="" draggable="false" />
+        </a>
+        <button className="slot slot-submit" type="submit" aria-label="Submit entry" />
+      </form>
       <nav className="landing-links" aria-label="Project links">
         <IconLink href={X_URL} label="Archemyst Lab on X" src="/x-logo.png" />
         <IconLink href="/docs" label="Docs" src="/docs-logo.png" />
