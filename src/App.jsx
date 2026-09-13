@@ -20,28 +20,63 @@ const validate = (form, opened) => {
   return null
 }
 
+const FOLLOW_KEY = 'archemyst-follow-gate'
+
 function Landing() {
   const [opened, setOpened] = useState(false)
   const [note, setNote] = useState(null)
+  const [gate, setGate] = useState(false)
+  const [sending, setSending] = useState(false)
 
-  // ponytail: entries land in localStorage only; swap for the submission endpoint when the backend exists.
-  const submitEntry = (event) => {
+  const submitEntry = async (event) => {
     event.preventDefault()
+    if (sending) return
     const form = event.currentTarget
     const error = validate(form, opened)
     if (error) return setNote({ tone: 'alert', text: error })
-    localStorage.setItem('archemyst-entry', JSON.stringify({
-      address: form.address.value.trim(),
-      proof: form.proof.value.trim(),
-      at: new Date().toISOString(),
-    }))
-    form.reset()
-    setNote({ tone: 'ok', text: 'Entry logged' })
+
+    // First valid submit is held back behind the follow gate; the next one goes through.
+    if (!localStorage.getItem(FOLLOW_KEY)) {
+      localStorage.setItem(FOLLOW_KEY, '1')
+      setNote(null)
+      return setGate(true)
+    }
+
+    setSending(true)
+    setNote({ tone: 'ok', text: 'Submitting…' })
+    try {
+      const res = await fetch('/api/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ address: form.address.value.trim(), proof: form.proof.value.trim() }),
+      })
+      const data = await res.json().catch(() => ({}))
+      if (!res.ok) return setNote({ tone: 'alert', text: data.error ?? 'Submission failed. Try again' })
+      form.reset()
+      setOpened(false)
+      setNote({ tone: 'ok', text: 'Entry submitted' })
+    } catch {
+      setNote({ tone: 'alert', text: 'Network error. Check your connection' })
+    } finally {
+      setSending(false)
+    }
   }
 
   return (
     <main className="landing">
       <img className="background" src="/art.gif" alt="" draggable="false" />
+      {gate && (
+        <div className="gate" role="dialog" aria-modal="true" aria-labelledby="gate-text">
+          <div className="gate-panel">
+            <span className="gate-tag">Archemyst // verification</span>
+            <p className="gate-text" id="gate-text">Please follow first</p>
+            <a
+              className="gate-link" href={X_URL} target="_blank" rel="noopener noreferrer"
+              onClick={() => setGate(false)}
+            >{X_URL.replace('https://', '')}</a>
+          </div>
+        </div>
+      )}
       <form className="mid" onSubmit={submitEntry} noValidate>
         <img className="box" src="/mid-box.png" alt="" draggable="false" />
         <input
@@ -64,7 +99,7 @@ function Landing() {
           <img src="/x-logo.png" alt="" draggable="false" />
           <span className="slot-x-hint">{opened ? 'opened' : 'click me'}</span>
         </a>
-        <button className="slot slot-submit" type="submit" aria-label="Submit entry" />
+        <button className="slot slot-submit" type="submit" disabled={sending} aria-label="Submit entry" />
         <p className={`mid-note${note ? ` is-${note.tone}` : ''}`} role="status" aria-live="polite">{note?.text ?? ''}</p>
       </form>
       <nav className="landing-links" aria-label="Project links">
