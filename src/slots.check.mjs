@@ -2,14 +2,14 @@
 // Run: node src/slots.check.mjs
 import { readFileSync } from 'node:fs'
 
-const SRC = { w: 160, h: 98 }
-// Panel inner areas measured from public/mid-box.png pixel map.
+const SRC = { w: 1600, h: 980 }
+// Panel inner areas measured from public/mid-box.png pixel map (64x40 grid scan).
 const PANELS = {
-  'slot-address': { x1: 23, x2: 133, y1: 23, y2: 33 },
-  'slot-proof': { x1: 50, x2: 116, y1: 44, y2: 56 },
-  'slot-submit': { x1: 69, x2: 87, y1: 68, y2: 81 },
+  'slot-address': { x1: 200, x2: 1400, y1: 230, y2: 333 },
+  'slot-proof': { x1: 475, x2: 1100, y1: 446, y2: 559 },
+  'slot-submit': { x1: 650, x2: 1000, y1: 671, y2: 818 },
 }
-const TOL = 1.5
+const TOL = 15
 
 const css = readFileSync(new URL('./styles.css', import.meta.url), 'utf8')
 const num = (rule, prop) => {
