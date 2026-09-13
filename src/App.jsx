@@ -47,7 +47,7 @@ function Landing() {
         <input
           className="slot slot-address" name="address" type="text"
           spellCheck="false" autoComplete="off"
-          placeholder="0x…" aria-label="Wallet address"
+          placeholder="Enter your EVM address" aria-label="Wallet address"
         />
         <input
           className="slot slot-proof" name="proof" type="url"
