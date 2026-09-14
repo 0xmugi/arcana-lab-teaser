@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 const X_URL = 'https://x.com/ArchemystLab'
+const POST_URL = 'https://x.com/ArchemystLab/status/2099499587304387071'
 
 const IconLink = ({ href, label, src }) => (
   <a href={href} aria-label={label}>
@@ -91,7 +92,7 @@ function Landing() {
           aria-label="Retweet or comment link"
         />
         <a
-          className={`slot slot-x${opened ? ' is-open' : ''}`} href={X_URL}
+          className={`slot slot-x${opened ? ' is-open' : ''}`} href={POST_URL}
           target="_blank" rel="noopener noreferrer"
           aria-label="Step 1 — open the post on X"
           onClick={() => { setOpened(true); setNote(null) }}
