@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 const X_URL = 'https://x.com/ArchemystLab'
-const POST_URL = 'https://x.com/ArchemystLab/status/2099499587304387071'
+const POST_URL = 'https://x.com/ArchemystLab/status/2099670071211880897'
 
 const IconLink = ({ href, label, src }) => (
   <a href={href} aria-label={label}>
